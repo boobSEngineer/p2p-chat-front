@@ -8,16 +8,19 @@ import {Provider} from "react-redux";
 import store from "./redux/redux-store";
 
 import {Peer} from "./p2p/Peer";
+import {uuid} from "uuidv4";
 
-const P2P_SIGNALLING_SERVER = "ws://localhost:8080/socket";
+const P2P_SIGNALLING_SERVER = "ws://192.168.43.60:8080/socket";
 {
-    let peer1 = new Peer("1", { signallingServer: P2P_SIGNALLING_SERVER });
-    let peer2 = new Peer("2", { signallingServer: P2P_SIGNALLING_SERVER });
-    peer2.on("message", (senderUid, data) => {
+    let peer = new Peer(uuid(), { signallingServer: P2P_SIGNALLING_SERVER });
+    let targetUid = prompt("input user uid, your uid:", peer.uid);
+
+    peer.on("message", (senderUid, data) => {
         console.log("message from " + senderUid + ": " + data);
     });
-    peer1.sendTo("2", "message", "hello");
-
+    if (targetUid && targetUid !== peer.uid) {
+        peer.sendTo(targetUid, "message", "hello");
+    }
 }
 
 ReactDOM.render(
