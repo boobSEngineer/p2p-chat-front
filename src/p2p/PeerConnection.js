@@ -69,7 +69,8 @@ export class PeerConnection extends EventEmitter {
                     .then(() => {
                         Logger.debug("sending " + (this.isInitiator ? "offer" : "answer") + " sdp from " + this.peer.uid + " to " + this.targetUid);
                         this.peer.socket.send(PeerEvents.SDP, {
-                            uid: this.peer.uid,
+                            senderUid: this.peer.uid,
+                            targetUid: this.targetUid,
                             sdp: localDescription
                         })
                     });
@@ -111,7 +112,8 @@ export class PeerConnection extends EventEmitter {
     onLocalIceCandidate(event) {
         if (event.candidate) {
             this.peer.socket.send(PeerEvents.CANDIDATE, {
-                uid: this.peer.uid,
+                senderUid: this.peer.uid,
+                targetUid: this.targetUid,
                 candidate: event.candidate
             });
         }

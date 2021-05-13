@@ -22,19 +22,19 @@ export class Peer extends EventEmitter {
         this._pendingCandidates = {};
 
         this.socket.on(PeerEvents.SDP, data => {
-            let connection = this._connections[data.uid];
+            let connection = this._connections[data.senderUid];
             if (!connection) {
-                connection = this._initConnection(data.uid, false);
+                connection = this._initConnection(data.senderUid, false);
             }
             connection.setRemoteDescription(data.sdp);
         })
 
         this.socket.on(PeerEvents.CANDIDATE, data => {
-            let connection = this._connections[data.uid];
+            let connection = this._connections[data.senderUid];
             if (connection) {
                 connection.addRemoteCandidate(data.candidate);
             } else {
-                let pendingCandidates = this._pendingCandidates[data.uid];
+                let pendingCandidates = this._pendingCandidates[data.senderUid];
                 if (!pendingCandidates) {
                     pendingCandidates = this._pendingCandidates[data.uid] = [];
                 }
