@@ -48,7 +48,7 @@ export class PeerConnection extends EventEmitter {
             "open": () => {
                 this.dataChannelOpened = true;
                 this.emit("open");
-                Logger.debug("channel opened from " + this.targetUid + " to " + this.peer.uid);
+                Logger.debug("channel opened from " + this.peer.uid + " to " + this.targetUid);
                 while (this.pendingMessageQueue.length) {
                     this.dataChannel.send(this.pendingMessageQueue.shift());
                 }
@@ -56,7 +56,7 @@ export class PeerConnection extends EventEmitter {
             "close": () => {
                 this.dataChannelOpened = false;
                 this.emit("close");
-                Logger.debug("channel closed from " + this.targetUid + " to " + this.peer.uid);
+                Logger.debug("channel closed from " + this.peer.uid + " to " + this.targetUid);
             },
             "message": this.onDataChannelMessage
         }, this);
@@ -67,6 +67,7 @@ export class PeerConnection extends EventEmitter {
             .then((localDescription) => {
                 this.peerConnection.setLocalDescription(localDescription)
                     .then(() => {
+                        Logger.debug("sending " + (this.isInitiator ? "offer" : "answer") + " sdp from " + this.peer.uid + " to " + this.targetUid);
                         this.peer.socket.send(PeerEvents.SDP, {
                             uid: this.peer.uid,
                             sdp: localDescription
@@ -88,6 +89,7 @@ export class PeerConnection extends EventEmitter {
         let remoteDescription = new RTCSessionDescription(sdp);
         this.peerConnection.setRemoteDescription(remoteDescription)
             .then(() => {
+                Logger.debug("received " + (!this.isInitiator ? "offer" : "answer") + " sdp from " + this.targetUid + " to " + this.peer.uid);
                 this.remoteDescriptionReady = true;
                 while (this.pendingRemoteCandidates.length) {
                     this.addRemoteCandidate(this.pendingRemoteCandidates.pop());
