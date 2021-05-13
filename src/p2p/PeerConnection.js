@@ -1,5 +1,6 @@
 import { EventEmitter, EventUtils } from "./Events";
 import { PeerEvents } from "./Peer";
+import {Logger} from "./Logger";
 
 export class PeerConnection extends EventEmitter {
     constructor(peer, isInitiator) {
@@ -37,7 +38,7 @@ export class PeerConnection extends EventEmitter {
             );
             this._setLocalDescriptionAndSend();
         } else {
-            console.error("connect must be called for initiator connection")
+            Logger.error("connect must be called for initiator connection")
         }
     }
 
@@ -47,7 +48,7 @@ export class PeerConnection extends EventEmitter {
             "open": () => {
                 this.dataChannelOpened = true;
                 this.emit("open");
-                console.log("channel opened");
+                Logger.debug("channel opened from " + this.targetUid + " to " + this.peer.uid);
                 while (this.pendingMessageQueue.length) {
                     this.dataChannel.send(this.pendingMessageQueue.shift());
                 }
@@ -55,7 +56,7 @@ export class PeerConnection extends EventEmitter {
             "close": () => {
                 this.dataChannelOpened = false;
                 this.emit("close");
-                console.log("channel closed");
+                Logger.debug("channel closed from " + this.targetUid + " to " + this.peer.uid);
             },
             "message": this.onDataChannelMessage
         }, this);
@@ -128,7 +129,7 @@ export class PeerConnection extends EventEmitter {
             this.emit("error", e);
             return;
         }
-        console.log("message from " + this.targetUid + " to " + this.peer.uid + ": " + event.data);
+        Logger.debug("message from " + this.targetUid + " to " + this.peer.uid + ": " + event.data);
         this.emit("message", data);
     }
 

@@ -51,6 +51,19 @@ export class Peer extends EventEmitter {
                 connection.addRemoteCandidate(this._pendingCandidates[uid].pop());
             }
         }
+
+        connection.on("close", () => {
+            if (this._connections[uid] === connection) {
+                delete this._connections[uid];
+            }
+        });
+
+        connection.on("message", data => {
+            if (data.type) {
+                this.emit(data.type, connection.targetUid, data.payload);
+            }
+        });
+
         return connection;
     }
 
@@ -61,5 +74,13 @@ export class Peer extends EventEmitter {
             connection.connect();
         }
         return connection;
+    }
+
+    getConnectionTo(uid) {
+        return this._connections[uid];
+    }
+
+    sendTo(uid, type, payload) {
+        this.connect(uid).send({ type, payload });
     }
 }
