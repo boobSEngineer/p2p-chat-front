@@ -2,10 +2,11 @@ const SET_AUTH_DATA_USER = 'SET-AUTH-DATA-USER'
 
 
 let initialState = {
-    userId: null,
+    uid: null,
     login: null,
     email: null,
-    isAuth: false
+    isAuth: false,
+    authorised:false,
 }
 
 

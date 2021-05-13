@@ -10,7 +10,7 @@ function App() {
   return (
       <div className='wrapper'>
           <Header/>
-          <Route component={User}/>
+          <User/>
         <div className='wrapper_content'>
             <Route path='/dialog' render={() =>  <DialogsContainer/>}/>
             <Route path='/login' render={() => <LoginContainer/>}/>
