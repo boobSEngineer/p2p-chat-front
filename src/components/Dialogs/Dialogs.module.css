@@ -1,0 +1,25 @@
+.messages{
+    padding: 5px;
+}
+
+.message{
+    color: #000000;
+}
+
+.item{
+    padding: 5px;
+}
+
+.message_change_block{
+    margin-top: 40%;
+}
+
+.item_button{
+}
+
+.item_text{
+    width: 70%;
+    height: 50px;
+    resize: none;
+
+}
