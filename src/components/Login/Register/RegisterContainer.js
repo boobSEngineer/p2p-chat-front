@@ -1,24 +1,24 @@
 import React from "react";
 import {connect} from "react-redux";
-import {loginThunkCreate} from "../../redux/auth-reducer";
 import {compose} from "redux";
-import Login from "./Login";
+import Register from "./Register";
+import {registerThunkCreate} from "../../../redux/auth-reducer";
 import {Redirect} from "react-router-dom";
 
-const LoginContainer = (props) => {
+const RegisterContainer = (props) => {
     if (props.isAuth) return <Redirect to={"/dialog"}/>
-    return <Login {...props}/>
+    return <Register {...props}/>
 
 }
 
 const mapStateToProps = (state) => {
     return {
-        isAuth: state.auth.isAuth
+        isAuth: state.auth.isAuth,
     }
 }
 
 export default compose(
-    connect(mapStateToProps, {loginThunkCreate}))(LoginContainer);
+    connect(mapStateToProps, {registerThunkCreate}))(RegisterContainer);
 
 
 
