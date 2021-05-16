@@ -6,7 +6,7 @@ import Login from "./Login";
 import {Redirect} from "react-router-dom";
 
 const LoginContainer = (props) => {
-    if (props.isAuth) return <Redirect to={"/dialog"}/>
+    //if (props.isAuth) return <Redirect to={"/dialog"}/>
     return <Login {...props}/>
 
 }

@@ -1,3 +1,5 @@
+import {authAPI} from "../API/api";
+
 const SET_AUTH_DATA_USER = 'SET-AUTH-DATA-USER'
 
 
@@ -26,5 +28,10 @@ export const setAuthUserDataCreate = (userId, login, email, isAuth) => {
     return {type: SET_AUTH_DATA_USER, payload: {userId, login, email, isAuth}}
 }
 
+export const getAuthUserDataThunkCreate = () => {
+    return (dispatch) => {
+        return authAPI.getMe()
+    }
+}
 
 export default authReducer;

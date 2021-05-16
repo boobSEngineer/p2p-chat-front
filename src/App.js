@@ -9,10 +9,10 @@ import LoginContainer from "./components/Login/LoginContainer";
 function App() {
   return (
       <div className='wrapper'>
-          <Header/>
-          <User/>
+          {/*<Header/>*/}
+          {/*<User/>*/}
         <div className='wrapper_content'>
-            <Route path='/dialog' render={() =>  <DialogsContainer/>}/>
+            {/*<Route path='/dialog' render={() =>  <DialogsContainer/>}/>*/}
             <Route path='/login' render={() => <LoginContainer/>}/>
         </div>
       </div>
