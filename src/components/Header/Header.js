@@ -8,9 +8,9 @@ const Header = (props) => {
             {props.isAuth
                 ?
                 <div>
-                    <div> className={s.logintext}> {props.login} {props.authorizedUserId} </div>
+                    <div className={s.logintext}> {props.username} {props.uid} </div>
                     <div>
-                        <button>Log out</button>
+                        <button onClick={props.logOut}>Log out</button>
                     </div>
                 </div>
                 :
