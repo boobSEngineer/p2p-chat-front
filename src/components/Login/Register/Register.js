@@ -1,15 +1,17 @@
 import React from "react";
 import {Field, reduxForm} from "redux-form";
+import {required} from "../../../utils/utils";
+import {FieldWithError} from "../../common/FormsControl/FormsControl";
 
 
 
 const RegisterForm = (props) => {
     return <form onSubmit={props.handleSubmit}>
         <div>
-            <Field name={'username'} component={'input'} placeholder={"Username"}/>
+            <Field name={'username'} component={'input'} component={FieldWithError("input")} placeholder={"Username"} validate={[required]}/>
         </div>
         <div>
-            <Field name={'password'} component={'input'} placeholder={"Password"}/>
+            <Field name={'password'} component={'input'} component={FieldWithError("input")} placeholder={"Password"} validate={[required]}/>
         </div>
         <div>
             <button>Register</button>
