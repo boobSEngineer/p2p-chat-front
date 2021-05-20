@@ -1,5 +1,6 @@
 import {authAPI} from "../API/api";
 import {stopSubmit} from "redux-form";
+import {requestChatsThunkCreate, setChatCreate} from "./chat-reducer";
 
 const SET_AUTH_DATA_USER = 'SET-AUTH-DATA-USER'
 
@@ -46,6 +47,7 @@ export const registerThunkCreate = (username, password) => {
             .then(data => {
                 if(data.success) {
                     dispatch(getAuthUserDataThunkCreate())
+                    dispatch(requestChatsThunkCreate())
                 } else {
                     let message = data.error
                     dispatch(stopSubmit("register", {_error: message}))
@@ -60,6 +62,7 @@ export const loginThunkCreate = (username, password) => {
             .then(data => {
                 if(data.success) {
                     dispatch(getAuthUserDataThunkCreate())
+                    dispatch(requestChatsThunkCreate())
                 } else {
                     let message = data.error
                     dispatch(stopSubmit("login", {_error: message}))
@@ -74,6 +77,7 @@ export const logoutThunkCreate = () => {
             .then(data => {
                 if(data.success) {
                     dispatch(setAuthUserDataCreate(null, null, false));
+                    dispatch(setChatCreate([]));
                 }
             })
     }

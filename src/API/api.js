@@ -51,7 +51,7 @@ export const userAPI = {
 };
 
 export const chatAPI = {
-    getChat(){
+    getChats(){
         return instance.get('chat/list')
             .then(response =>{
                 return response.data;

@@ -4,11 +4,11 @@ import {Route} from "react-router-dom";
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import LoginContainer from "./components/Login/LoginContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
-import UserContainer from "./components/User/UserContainer";
 import RegisterContainer from "./components/Login/Register/RegisterContainer";
 import {initializeAppThunkCreate} from "./redux/app-reducer";
 import {connect} from "react-redux";
 import {compose} from "redux";
+import ChatContainer from "./components/User/ChatContainer";
 
 class App extends React.Component {
     componentDidMount() {
@@ -19,7 +19,7 @@ class App extends React.Component {
         return (
             <div className='wrapper'>
                 <HeaderContainer/>
-                {/*<UserContainer/>*/}
+                <ChatContainer/>
                 <div className='wrapper_content'>
                     {/*<Route path='/dialog' render={() =>  <DialogsContainer/>}/>*/}
                     <Route path='/login' render={() => <LoginContainer/>}/>
