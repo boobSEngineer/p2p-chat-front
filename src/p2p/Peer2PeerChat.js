@@ -44,7 +44,7 @@ export class Peer2PeerChat extends EventEmitter {
             // in case of dialog - find dialog chat for message sender
             if (message.chat.chatType === "DIALOG") {
                 for (let chat of this.chats) {
-                    if (chat.targets && chat.targets[0] === uid) {
+                    if (chat.chatType === "DIALOG" && chat.targets && chat.targets[0] === uid) {
                         this.emit("message", chat.chatId, uid, message.payload, "DIALOG");
                         return;
                     }
@@ -54,7 +54,7 @@ export class Peer2PeerChat extends EventEmitter {
             // in case of group chat - find it by id
             else if (message.chat.chatType === "GROUP_CHAT") {
                 for (let chat of this.chats) {
-                    if (chat.chatId === message.chat.chatId && chat.chatType === "GROUP_CHAT") {
+                    if (chat.chatType === "GROUP_CHAT" && chat.chatId === message.chat.chatId) {
                         this.emit("message", chat.chatId, uid, message.payload, "GROUP_CHAT");
                     }
                 }
