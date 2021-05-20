@@ -8,7 +8,7 @@ const AddMessageForm = (props) => {
     return (
         <form onSubmit={props.handleSubmit}>
             <div>
-                <Field name={'newMessageText'} component={'textarea'} placeholder={"Enter your message"}/>
+                <Field name={'newText'} component={'textarea'} placeholder={"Enter your message"}/>
             </div>
             <div>
                 <button>Send</button>
@@ -21,12 +21,14 @@ const AddMessageFormRedux = reduxForm({form:'AddMessageForm'})(AddMessageForm);
 
 const   Dialogs = (props) => {
     let messagesElements = props.messages.map(m => <Message message={m}/>);
-
+    debugger
     return (
         <div>
             {messagesElements}
             <div className={s.message_change_block}>
-                <AddMessageFormRedux onSubmit={(values)=>{props.addMessage(values.newMessageText)}}/>
+                <AddMessageFormRedux onSubmit={(values)=>
+                {props.addMessage(values.newText, props.currentChatId, props.me)}
+                }/>
             </div>
         </div>
     )
