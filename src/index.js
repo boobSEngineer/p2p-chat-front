@@ -8,8 +8,10 @@ import {Provider} from "react-redux";
 import store from "./redux/redux-store";
 
 import {Peer} from "./p2p/Peer";
+import {Peer2PeerChat} from "./p2p/Peer2PeerChat";
 import {uuid} from "uuidv4";
 
+// TODO: debug code, remove
 const P2P_SIGNALLING_SERVER = "ws://localhost:8080/socket";
 {
     /*
@@ -23,9 +25,9 @@ const P2P_SIGNALLING_SERVER = "ws://localhost:8080/socket";
         peer.sendTo(targetUid, "message", "hello");
     }*/
 
-    let peer1 = new Peer("uuid1", { signallingServer: P2P_SIGNALLING_SERVER });
-    let peer2 = new Peer("uuid2", { signallingServer: P2P_SIGNALLING_SERVER });
-    peer1.sendTo(peer2.uid, "a", "b");
+    //let peer1 = new Peer("uuid1", { signallingServer: P2P_SIGNALLING_SERVER });
+    //let peer2 = new Peer("uuid2", { signallingServer: P2P_SIGNALLING_SERVER });
+    //peer1.sendTo(peer2.uid, "a", "b");
 }
 
 ReactDOM.render(
@@ -38,6 +40,10 @@ ReactDOM.render(
     </React.StrictMode>,
     document.getElementById('root')
 );
+
+
+// TODO: debug code, remove
+window.p2p_chat = new Peer2PeerChat({ signallingServer: "ws://localhost:8080/socket" })
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
