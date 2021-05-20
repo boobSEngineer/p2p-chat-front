@@ -7,6 +7,7 @@ export const PeerEvents = {
     PEER_INIT: "peer_init",
     SDP: "sdp",
     CANDIDATE: "candidate",
+    CLOSE_PEER: "close_peer"
 }
 
 
@@ -82,5 +83,10 @@ export class Peer extends EventEmitter {
 
     sendTo(uid, type, payload) {
         this.connect(uid).send({ type, payload });
+    }
+
+    close() {
+        this.socket.send(PeerEvents.CLOSE_PEER, { uid: this.uid });
+        this.socket = null;
     }
 }
