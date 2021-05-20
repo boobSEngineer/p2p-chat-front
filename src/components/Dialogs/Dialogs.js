@@ -20,7 +20,7 @@ const AddMessageForm = (props) => {
 const AddMessageFormRedux = reduxForm({form:'AddMessageForm'})(AddMessageForm);
 
 const   Dialogs = (props) => {
-    let messagesElements = props.messages.map(message => <Message dialog={message.message} key={message.uid}/>);
+    let messagesElements = props.messages.map(m => <Message message={m}/>);
 
     return (
         <div>

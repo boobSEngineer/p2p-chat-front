@@ -21,7 +21,7 @@ class App extends React.Component {
                 <HeaderContainer/>
                 <ChatContainer/>
                 <div className='wrapper_content'>
-                    {/*<Route path='/dialog' render={() =>  <DialogsContainer/>}/>*/}
+                    <Route path='/dialog' render={() =>  <DialogsContainer/>}/>
                     <Route path='/login' render={() => <LoginContainer/>}/>
                     <Route path='/register' render={() => <RegisterContainer/>}/>
                 </div>
