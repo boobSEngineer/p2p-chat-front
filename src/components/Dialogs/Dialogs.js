@@ -21,7 +21,6 @@ const AddMessageFormRedux = reduxForm({form:'AddMessageForm'})(AddMessageForm);
 
 const   Dialogs = (props) => {
     let messagesElements = props.messages.map(m => <Message message={m}/>);
-    debugger
     return (
         <div>
             {messagesElements}

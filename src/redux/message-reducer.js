@@ -1,3 +1,5 @@
+import {chatPeer} from "./p2p/p2p-chat";
+
 const ADD_MESSAGE = 'ADD-MESSAGE';
 
 let initialState = {
@@ -26,8 +28,16 @@ const messageReducer = (state = initialState, action) => {
             return state;
     }
 }
+
 export const addMessageCreate = (newMessageText, chatId, uid) => {
     return {type: ADD_MESSAGE, newMessageText, chatId, uid}
+}
+
+export const sendMessageThunkCreate = (newMessageText, chatId, uid) => {
+    return (dispatch) => {
+        dispatch(addMessageCreate(newMessageText, chatId, uid));
+        chatPeer.sendMessage(chatId, newMessageText);
+    }
 }
 
 export default messageReducer;

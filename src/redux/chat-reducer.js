@@ -1,4 +1,5 @@
 import {chatAPI} from "../API/api";
+import {chatPeer} from "./p2p/p2p-chat";
 
 const SET_CHATS = 'SET-CHATS';
 const SET_CURRENT_CHATID = 'SET-CURRENT_CHATID'
@@ -40,6 +41,7 @@ export const requestChatsThunkCreate = () => {
         chatAPI.getChats()
             .then(data => {
                 dispatch(setChatCreate(data));
+                chatPeer.setChats(data);
             })
     }
 }

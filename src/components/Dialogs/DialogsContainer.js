@@ -1,5 +1,5 @@
 import React from 'react';
-import {addMessageCreate} from '../../redux/message-reducer';
+import {sendMessageThunkCreate} from '../../redux/message-reducer';
 import Dialogs from "./Dialogs";
 import {connect} from "react-redux";
 import {compose} from "redux";
@@ -17,5 +17,5 @@ const mapStateToProps = (state) => {
 }
 
 export default compose (
-    connect(mapStateToProps, {addMessage: addMessageCreate}),
+    connect(mapStateToProps, {addMessage: sendMessageThunkCreate}),
 )(Dialogs);
