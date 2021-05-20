@@ -3,7 +3,7 @@ import * as axios from "axios";
 
 const instance = axios.create({
     withCredentials: true,
-    baseURL: 'http://192.168.86.32:8080/api/',
+    baseURL: 'https://192.168.86.32:8080/api/',
     crossOrigin: true,
     headers: {
         'Content-Type': 'application/json',

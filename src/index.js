@@ -43,7 +43,7 @@ ReactDOM.render(
 
 
 // TODO: debug code, remove
-window.p2p_chat = new Peer2PeerChat({ signallingServer: "ws://localhost:8080/socket" })
+window.p2p_chat = new Peer2PeerChat({ signallingServer: "wss://192.168.86.32:8080/socket" })
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
