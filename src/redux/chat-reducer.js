@@ -36,12 +36,21 @@ export const setChatCreate = (chats) => {
     return {type: SET_CHATS, chats}
 }
 
+export const addDialogThunkCreate = (youId) => {
+    return (dispatch) => {
+        chatAPI.addNewDialog(youId)
+            .then(chat => {
+                dispatch(requestChatsThunkCreate());
+            })
+    }
+}
+
 export const requestChatsThunkCreate = () => {
     return (dispatch) => {
         chatAPI.getChats()
-            .then(data => {
-                dispatch(setChatCreate(data));
-                chatPeer.setChats(data);
+            .then(chats => {
+                dispatch(setChatCreate(chats));
+                chatPeer.setChats(chats);
             })
     }
 }

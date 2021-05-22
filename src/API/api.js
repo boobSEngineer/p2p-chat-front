@@ -58,15 +58,8 @@ export const chatAPI = {
             })
     },
 
-    getChatId(uid){
-        return instance.get('chat/get_members', {uid})
-            .then(response => {
-                return response.data;
-            })
-    },
-
     getMembers(chatId){
-        return instance.get('chat/list', {chatId})
+        return instance.get('chat/get_members', {chatId})
             .then(response => {
                 return response.data;
             })
