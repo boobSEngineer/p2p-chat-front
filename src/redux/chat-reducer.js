@@ -1,5 +1,6 @@
 import {chatAPI} from "../API/api";
 import {chatPeer} from "./p2p/p2p-chat";
+import {addMessageCreate} from "./message-reducer";
 
 const SET_CHATS = 'SET-CHATS';
 const SET_CURRENT_CHATID = 'SET-CURRENT_CHATID'
@@ -62,6 +63,17 @@ export const requestChatsThunkCreate = () => {
                 chatPeer.setChats(chats);
             })
     }
+}
+
+export const addMessageWithoutDialogThunkCreate = (senderUid, text) => {
+    return(dispatch) => {
+        chatAPI.addNewDialog(senderUid)
+            .then(chat => {
+                dispatch(addMessageCreate(text, chat.chatId, senderUid));
+                dispatch(requestChatsThunkCreate());
+            })
+    }
+
 }
 
 export default chatReducer;
