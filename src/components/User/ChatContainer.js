@@ -1,7 +1,12 @@
 import React from 'react';
 import Chat from "./Chat";
 import {connect} from "react-redux";
-import {addDialogThunkCreate, requestChatsThunkCreate, setCurrentChatIdCreate} from "../../redux/chat-reducer";
+import {
+    addDialogThunkCreate,
+    removeChatThunkCreate,
+    requestChatsThunkCreate,
+    setCurrentChatIdCreate
+} from "../../redux/chat-reducer";
 import {compose} from "redux";
 
 
@@ -15,6 +20,7 @@ class chatContainer extends React.Component {
             chats={this.props.chats}
             setCurrentChatId={this.props.setCurrentChatId}
             addDialog={this.props.addDialog}
+            leaveChat={this.props.leaveChat}
         />
     }
 }
@@ -28,6 +34,7 @@ const mapStateToProps = (state) => {
 export default compose(
     connect(mapStateToProps,
         {
+            leaveChat:removeChatThunkCreate,
             addDialog:addDialogThunkCreate,
             setChats: requestChatsThunkCreate,
             setCurrentChatId:setCurrentChatIdCreate

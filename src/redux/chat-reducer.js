@@ -45,6 +45,15 @@ export const addDialogThunkCreate = (youId) => {
     }
 }
 
+export const removeChatThunkCreate = (chatId) => {
+    return (dispatch) => {
+        chatAPI.leaveChat(chatId)
+            .then(chat => {
+                dispatch(requestChatsThunkCreate());
+            })
+    }
+}
+
 export const requestChatsThunkCreate = () => {
     return (dispatch) => {
         chatAPI.getChats()

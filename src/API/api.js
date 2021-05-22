@@ -115,7 +115,7 @@ export const chatAPI = {
     },
 
     leaveChat(chatId){
-        return instance.post('chat/rename_group', {chatId})
+        return instance.post('chat/leave', {chatId})
             .then(response => {
                 return response.data;
             })
