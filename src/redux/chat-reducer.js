@@ -95,18 +95,18 @@ export const joinToGroupThunkCreate = (inviteUid) => {
     }
 }
 
-// export const getInviteThunkCreate = () => {
-//     return(dispatch) => {
-//         chatAPI.getInvite()
-//             .then(chat => {
-//                 dispatch(requestChatsThunkCreate());
-//             })
-//     }
-// }
-
-export const renameGroupThunkCreate = () => {
+export const getInviteThunkCreate = () => {
     return(dispatch) => {
         chatAPI.getInvite()
+            .then(chat => {
+                dispatch(requestChatsThunkCreate());
+            })
+    }
+}
+
+export const renameGroupThunkCreate = (chatId, newChatName) => {
+    return(dispatch) => {
+        chatAPI.renameGroup(chatId, newChatName)
             .then(chat => {
                 dispatch(requestChatsThunkCreate());
             })

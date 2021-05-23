@@ -2,7 +2,7 @@ import React from 'react';
 import s from './Dialogs.module.css';
 import Message from './Message/Message';
 import {Field, reduxForm} from 'redux-form';
-import HeaderChat from "../User/HeaderChat/HeaderChat";
+import HeaderChatGroups from "./HeaderChat/HeaderChatGroups";
 
 
 const AddMessageForm = (props) => {
@@ -27,7 +27,11 @@ const Dialogs = (props) => {
             {props.isAuth ? (
                 <div>
                     <div>
-                        <HeaderChat/>
+                        <HeaderChatGroups
+                            renameGroup={props.renameGroup}
+                            currentChatId={props.currentChatId}
+                            nameChat={props.nameChat}
+                        />
                     </div>
                     <div>
                         {messagesElements}

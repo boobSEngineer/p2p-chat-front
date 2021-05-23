@@ -3,7 +3,7 @@ import Chat from "./Chat";
 import {connect} from "react-redux";
 import {
     addDialogThunkCreate, addGroupChatThunkCreate, joinToGroupThunkCreate,
-    removeChatThunkCreate,
+    removeChatThunkCreate, renameGroupThunkCreate,
     requestChatsThunkCreate,
     setCurrentChatIdCreate
 } from "../../redux/chat-reducer";

@@ -8,6 +8,12 @@ export const getChats = (state) => {
     return state.chatPage.chats;
 }
 
+export const getNameByChatId = (state) => {
+    for (let chat of state.chatPage.chats) {
+        if (chat.chatId === state.chatPage.currentChatId) return chat.chatTitle
+    }
+}
+
 export const getCurrentChatId = (state) => {
     return state.chatPage.currentChatId;
 }
