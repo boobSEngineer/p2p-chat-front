@@ -2,12 +2,14 @@ import React from 'react';
 import Chat from "./Chat";
 import {connect} from "react-redux";
 import {
-    addDialogThunkCreate,
+    addDialogThunkCreate, addGroupChatThunkCreate, joinToGroupThunkCreate,
     removeChatThunkCreate,
     requestChatsThunkCreate,
     setCurrentChatIdCreate
 } from "../../redux/chat-reducer";
 import {compose} from "redux";
+import {getChats} from "../../redux/select/chat-selector";
+import {isAuth} from "../../redux/select/auth-selector";
 
 
 class chatContainer extends React.Component {
@@ -21,13 +23,17 @@ class chatContainer extends React.Component {
             setCurrentChatId={this.props.setCurrentChatId}
             addDialog={this.props.addDialog}
             leaveChat={this.props.leaveChat}
+            isAuth={this.props.isAuth}
+            addGroupChat={this.props.addGroupChat}
+            joinToGroup={this.props.joinToGroup}
         />
     }
 }
 
 const mapStateToProps = (state) => {
     return {
-        chats: state.chatPage.chats,
+        chats: getChats(state),
+        isAuth: isAuth(state),
     }
 }
 
@@ -36,6 +42,8 @@ export default compose(
         {
             leaveChat:removeChatThunkCreate,
             addDialog:addDialogThunkCreate,
+            addGroupChat:addGroupChatThunkCreate,
+            joinToGroup:joinToGroupThunkCreate,
             setChats: requestChatsThunkCreate,
             setCurrentChatId:setCurrentChatIdCreate
         }

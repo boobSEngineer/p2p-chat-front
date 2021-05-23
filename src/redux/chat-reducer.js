@@ -33,13 +33,23 @@ const chatReducer = (state = initialState, action) => {
 export const setCurrentChatIdCreate = (chatId) => {
     return {type: SET_CURRENT_CHATID, chatId}
 }
-export const setChatCreate = (chats) => {
+
+export const setChatsCreate = (chats) => {
     return {type: SET_CHATS, chats}
 }
 
 export const addDialogThunkCreate = (youId) => {
     return (dispatch) => {
         chatAPI.addNewDialog(youId)
+            .then(chat => {
+                dispatch(requestChatsThunkCreate());
+            })
+    }
+}
+
+export const addGroupChatThunkCreate = (chatName) => {
+    return (dispatch) => {
+        chatAPI.createGroupChat(chatName)
             .then(chat => {
                 dispatch(requestChatsThunkCreate());
             })
@@ -59,7 +69,7 @@ export const requestChatsThunkCreate = () => {
     return (dispatch) => {
         chatAPI.getChats()
             .then(chats => {
-                dispatch(setChatCreate(chats));
+                dispatch(setChatsCreate(chats));
                 chatPeer.setChats(chats);
             })
     }
@@ -74,6 +84,33 @@ export const addMessageWithoutDialogThunkCreate = (senderUid, text) => {
             })
     }
 
+}
+
+export const joinToGroupThunkCreate = (inviteUid) => {
+    return(dispatch) => {
+        chatAPI.joinToGroup(inviteUid)
+            .then(chat => {
+                dispatch(requestChatsThunkCreate());
+            })
+    }
+}
+
+// export const getInviteThunkCreate = () => {
+//     return(dispatch) => {
+//         chatAPI.getInvite()
+//             .then(chat => {
+//                 dispatch(requestChatsThunkCreate());
+//             })
+//     }
+// }
+
+export const renameGroupThunkCreate = () => {
+    return(dispatch) => {
+        chatAPI.getInvite()
+            .then(chat => {
+                dispatch(requestChatsThunkCreate());
+            })
+    }
 }
 
 export default chatReducer;
