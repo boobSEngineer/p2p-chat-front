@@ -4,6 +4,10 @@ export const getMessages = (state) => {
     return state.messagePage.messages;
 }
 
+export const getChats = (state) => {
+    return state.chatPage.chats;
+}
+
 export const getCurrentChatId = (state) => {
     return state.chatPage.currentChatId;
 }

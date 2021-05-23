@@ -1,6 +1,6 @@
 import {authAPI} from "../API/api";
 import {stopSubmit} from "redux-form";
-import {requestChatsThunkCreate, setChatCreate} from "./chat-reducer";
+import {requestChatsThunkCreate, setChatsCreate} from "./chat-reducer";
 import {chatPeer} from "./p2p/p2p-chat";
 
 const SET_AUTH_DATA_USER = 'SET-AUTH-DATA-USER'
@@ -79,7 +79,7 @@ export const logoutThunkCreate = () => {
             .then(data => {
                 if(data.success) {
                     dispatch(setAuthUserDataCreate(null, null, false));
-                    dispatch(setChatCreate([]));
+                    dispatch(setChatsCreate([]));
                 }
             })
     }

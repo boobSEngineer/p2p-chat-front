@@ -2,6 +2,7 @@ import React from 'react';
 import s from './Dialogs.module.css';
 import Message from './Message/Message';
 import {Field, reduxForm} from 'redux-form';
+import HeaderChat from "../User/HeaderChat/HeaderChat";
 
 
 const AddMessageForm = (props) => {
@@ -17,18 +18,29 @@ const AddMessageForm = (props) => {
     )
 }
 
-const AddMessageFormRedux = reduxForm({form:'AddMessageForm'})(AddMessageForm);
+const AddMessageFormRedux = reduxForm({form: 'AddMessageForm'})(AddMessageForm);
 
-const   Dialogs = (props) => {
+const Dialogs = (props) => {
     let messagesElements = props.messages.map(m => <Message message={m}/>);
     return (
         <div>
-            {messagesElements}
-            <div className={s.message_change_block}>
-                <AddMessageFormRedux onSubmit={(values)=>
-                {props.addMessage(values.newText, props.currentChatId, props.me)}
-                }/>
-            </div>
+            {props.isAuth ? (
+                <div>
+                    <div>
+                        <HeaderChat/>
+                    </div>
+                    <div>
+                        {messagesElements}
+                        <div className={s.message_change_block}>
+                            <AddMessageFormRedux onSubmit={(values) => {
+                                props.addMessage(values.newText, props.currentChatId, props.me)
+                            }
+                            }/>
+                        </div>
+                    </div>
+                </div>
+            ) : null
+            }
         </div>
     )
 }

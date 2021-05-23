@@ -4,7 +4,7 @@ import Dialogs from "./Dialogs";
 import {connect} from "react-redux";
 import {compose} from "redux";
 import {getCurrentChatId, getMessagesByCurrentId, getNewMessageText} from "../../redux/select/chat-selector";
-import {getMe} from "../../redux/select/auth-selector";
+import {getMe, isAuth} from "../../redux/select/auth-selector";
 
 const mapStateToProps = (state) => {
     return{
@@ -12,6 +12,7 @@ const mapStateToProps = (state) => {
         newMessageText: getNewMessageText(state),
         currentChatId:getCurrentChatId(state),
         me:getMe(state),
+        isAuth:isAuth(state),
 
     }
 }

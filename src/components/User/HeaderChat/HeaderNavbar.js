@@ -14,7 +14,7 @@ const HeaderNavbar = (props) => {
 
     const modalJoinGroup = () =>{
         let inviteUid = prompt('Введите id группы');
-        props.addGroupChat(inviteUid);
+        props.joinToGroup(inviteUid);
     }
 
     return (
