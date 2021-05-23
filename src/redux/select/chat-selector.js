@@ -8,9 +8,19 @@ export const getChats = (state) => {
     return state.chatPage.chats;
 }
 
+export const getInvite = (state) => {
+    return state.chatPage.invite;
+}
+
 export const getNameByChatId = (state) => {
     for (let chat of state.chatPage.chats) {
         if (chat.chatId === state.chatPage.currentChatId) return chat.chatTitle
+    }
+}
+
+export const getMemberByChatId = (state) => {
+    for (let chat of state.chatPage.chats) {
+        if (chat.chatId === state.chatPage.currentChatId) return chat.targets.length + 1;
     }
 }
 

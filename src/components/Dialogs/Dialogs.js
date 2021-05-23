@@ -31,6 +31,10 @@ const Dialogs = (props) => {
                             renameGroup={props.renameGroup}
                             currentChatId={props.currentChatId}
                             nameChat={props.nameChat}
+                            setInvite={props.setInvite}
+                            invite={props.invite}
+                            setNewInvite={props.setNewInvite}
+                            members={props.members}
                         />
                     </div>
                     <div>

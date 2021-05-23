@@ -3,11 +3,13 @@ import {chatPeer} from "./p2p/p2p-chat";
 import {addMessageCreate} from "./message-reducer";
 
 const SET_CHATS = 'SET-CHATS';
-const SET_CURRENT_CHATID = 'SET-CURRENT_CHATID'
+const SET_CURRENT_CHATID = 'SET-CURRENT_CHATID';
+const SET_INVITE = 'GET-INVITE';
 
 let initialState = {
     chats: [],
     currentChatId: null,
+    invite: null,
 }
 
 const chatReducer = (state = initialState, action) => {
@@ -21,7 +23,14 @@ const chatReducer = (state = initialState, action) => {
         case SET_CURRENT_CHATID: {
             return {
                 ...state,
-                currentChatId: action.chatId
+                currentChatId: action.chatId,
+                invite: null,
+            }
+        }
+        case SET_INVITE: {
+            return {
+                ...state,
+                invite: action.invite
             }
         }
         default: {
@@ -36,6 +45,10 @@ export const setCurrentChatIdCreate = (chatId) => {
 
 export const setChatsCreate = (chats) => {
     return {type: SET_CHATS, chats}
+}
+
+export const setInviteGroupCreate = (invite) => {
+    return {type: SET_INVITE, invite}
 }
 
 export const addDialogThunkCreate = (youId) => {
@@ -95,11 +108,22 @@ export const joinToGroupThunkCreate = (inviteUid) => {
     }
 }
 
-export const getInviteThunkCreate = () => {
+export const setInviteThunkCreate = (chatId) => {
     return(dispatch) => {
-        chatAPI.getInvite()
-            .then(chat => {
-                dispatch(requestChatsThunkCreate());
+        debugger
+        chatAPI.getInvite(chatId)
+            .then(invite => {
+                dispatch(setInviteGroupCreate(invite));
+            })
+    }
+}
+
+export const setNewInviteThunkCreate = (chatId) => {
+    return(dispatch) => {
+        debugger
+        chatAPI.getNewInvite(chatId)
+            .then(invite => {
+                dispatch(setInviteGroupCreate(invite));
             })
     }
 }

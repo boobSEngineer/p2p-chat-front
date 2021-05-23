@@ -4,13 +4,18 @@ import Dialogs from "./Dialogs";
 import {connect} from "react-redux";
 import {compose} from "redux";
 import {
-    getCurrentChatId,
+    getCurrentChatId, getInvite, getMemberByChatId,
     getMessagesByCurrentId,
     getNameByChatId,
     getNewMessageText
 } from "../../redux/select/chat-selector";
 import {getMe, isAuth} from "../../redux/select/auth-selector";
-import {renameGroupThunkCreate} from "../../redux/chat-reducer";
+import {
+    getInviteThunkCreate,
+    renameGroupThunkCreate,
+    setInviteThunkCreate,
+    setNewInviteThunkCreate
+} from "../../redux/chat-reducer";
 
 const mapStateToProps = (state) => {
     return{
@@ -20,6 +25,8 @@ const mapStateToProps = (state) => {
         me:getMe(state),
         isAuth:isAuth(state),
         nameChat:getNameByChatId(state),
+        invite:getInvite(state),
+        members:getMemberByChatId(state)
 
     }
 }
@@ -28,5 +35,7 @@ export default compose (
     connect(mapStateToProps, {
         addMessage: sendMessageThunkCreate,
         renameGroup:renameGroupThunkCreate,
+        setInvite:setInviteThunkCreate,
+        setNewInvite:setNewInviteThunkCreate,
     }),
 )(Dialogs);

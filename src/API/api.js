@@ -59,7 +59,7 @@ export const chatAPI = {
     },
 
     getMembers(chatId){
-        return instance.get('chat/get_members', {chatId})
+        return instance.get(`chat/get_members?chatId=${chatId}`)
             .then(response => {
                 return response.data;
             })
@@ -86,15 +86,15 @@ export const chatAPI = {
             })
     },
 
-    getInvite(){
-        return instance.get('chat/get_invite_uid')
+    getInvite(chatId){
+        return instance.get(`chat/get_invite_uid?chatId=${chatId}`)
             .then(response => {
                 return response.data.inviteUid;
             })
     },
 
     getNewInvite(chatId){
-        return instance.post('chat/revoke_invite_uid', {chatId})
+        return instance.post(`chat/revoke_invite_uid?chatId=${chatId}`)
             .then(response => {
                 return response.data.inviteUid;
             })
