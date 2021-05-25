@@ -1,4 +1,5 @@
 import React from 'react';
+import {Button, ButtonGroup, ListGroup, Navbar} from "react-bootstrap";
 
 const HeaderNavbar = (props) => {
 
@@ -18,11 +19,11 @@ const HeaderNavbar = (props) => {
     }
 
     return (
-        <div>
-            <button onClick={onClickDialog}>добавить диалог</button>
-            <button onClick={onClickGroup}> добавить группу </button>
-            <button onClick={onClickJoinGroup}>присоедениться к группе</button>
-        </div>
+            <ButtonGroup aria-label="Basic example" size="sm">
+                <Button variant="outline-primary" onClick={onClickDialog}>добавить диалог</Button>
+                <Button variant="outline-primary" onClick={onClickGroup}> добавить группу </Button>
+                <Button variant="outline-primary" onClick={onClickJoinGroup}>присоедениться к группе</Button>
+            </ButtonGroup>
     )
 }
 

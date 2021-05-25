@@ -1,5 +1,6 @@
 import React from "react";
 import InviteLink from "./InviteLink";
+import {Button, ButtonGroup} from "react-bootstrap";
 
 const HeaderChatGroups = (props) => {
 
@@ -9,22 +10,25 @@ const HeaderChatGroups = (props) => {
     }
 
     return (
-        <div>
+        <ButtonGroup>
             <div>
                 {props.members}
             </div>
             <div>
-                <button onClick={()=>{props.setInvite(props.currentChatId)}}> Получить приглашение </button>
+                <Button variant="outline-primary" onClick={()=>{props.setInvite(props.currentChatId)}}>
+                    Получить приглашение </Button>
                 <InviteLink invite={props.invite}/>
             </div>
             <div>
-                <button onClick={()=>{props.setNewInvite(props.currentChatId)}}> Получить новое приглашение </button>
+                <Button variant="outline-primary" onClick={()=>{props.setNewInvite(props.currentChatId)}}>
+                    Получить новое приглашение </Button>
             </div>
             <div>
-                <button onClick={onClickRename}> Переназвать группу </button>
+                <Button variant="outline-primary" onClick={onClickRename}>
+                    Переназвать группу </Button>
             </div>
 
-        </div>
+        </ButtonGroup>
     )
 }
 

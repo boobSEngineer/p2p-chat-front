@@ -6,6 +6,7 @@ import {registerThunkCreate} from "../../../redux/auth-reducer";
 import {Redirect} from "react-router-dom";
 
 const RegisterContainer = (props) => {
+    debugger
     if (props.isAuth) return <Redirect to={"/dialog"}/>
     return <Register {...props}/>
 

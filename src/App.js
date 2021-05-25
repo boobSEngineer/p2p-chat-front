@@ -9,6 +9,7 @@ import {initializeAppThunkCreate} from "./redux/app-reducer";
 import {connect} from "react-redux";
 import {compose} from "redux";
 import ChatContainer from "./components/User/ChatContainer";
+import {Col, Container, Row} from "react-bootstrap";
 
 class App extends React.Component {
     componentDidMount() {
@@ -17,13 +18,17 @@ class App extends React.Component {
 
     render() {
         return (
-            <div>
+            <Container>
                 <HeaderContainer/>
-                <ChatContainer/>
-                <Route path='/dialog' render={() => <DialogsContainer/>}/>
-                <Route path='/login' render={() => <LoginContainer/>}/>
-                <Route path='/register' render={() => <RegisterContainer/>}/>
-            </div>
+                <Row>
+                    <Col sm={4}> <ChatContainer/> </Col>
+                    <Col sm={8}>
+                        <Route path='/dialog' render={() => <DialogsContainer/>}/>
+                        <Route path='/register' render={() => <RegisterContainer/>}/>
+                        <Route path='/login' render={() => <LoginContainer/>}/>
+                    </Col>
+                </Row>
+            </Container>
         );
     }
 }
