@@ -1,27 +1,25 @@
-import React from "react";
-import {Field, reduxForm} from "redux-form";
-import {Link} from "react-router-dom";
-import {required} from "../../utils/utils";
-import {FieldWithError} from "../common/FormsControl/FormsControl";
-
+import React from 'react';
+import {Field, reduxForm} from 'redux-form';
+import {Link} from 'react-router-dom';
+import {required} from '../../utils/utils';
+import {FieldWithError} from '../common/FormsControl/FormsControl';
+import {Button, Form} from 'react-bootstrap';
 
 
 const LoginForm = (props) => {
     return <form onSubmit={props.handleSubmit}>
-        <div>
-            <Field name={'username'} component={'input'} component={FieldWithError("input")} placeholder={"Username"} validate={[required]}/>
-        </div>
-        <div>
-            <Field name={'password'} component={'input'} component={FieldWithError("input")} placeholder={"Password"} validate={[required]}/>
-        </div>
-        <div>
-            <button>Login</button>
-        </div>
-        <div>
-            <Link to={'/register'}> <button>Register</button> </Link>
-        </div>
 
-    </form>
+            <Form.Group controlId="formBasicEmail">
+                <Field name={'username'} component={FieldWithError} placeholder={"Username"}
+                       validate={[required]}/>
+            </Form.Group>
+            <Form.Group>
+                <Field name={'password'} component={FieldWithError} placeholder={"Password"}
+                       validate={[required]}/>
+            </Form.Group>
+            <Button variant='primary' type='submit'>Login</Button>{' '}
+        </form>
+
 }
 
 const LoginReduxForm = reduxForm({form: 'login'})(LoginForm);

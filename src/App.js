@@ -17,14 +17,12 @@ class App extends React.Component {
 
     render() {
         return (
-            <div className='wrapper'>
+            <div>
                 <HeaderContainer/>
                 <ChatContainer/>
-                <div className='wrapper_content'>
-                    <Route path='/dialog' render={() =>  <DialogsContainer/>}/>
-                    <Route path='/login' render={() => <LoginContainer/>}/>
-                    <Route path='/register' render={() => <RegisterContainer/>}/>
-                </div>
+                <Route path='/dialog' render={() => <DialogsContainer/>}/>
+                <Route path='/login' render={() => <LoginContainer/>}/>
+                <Route path='/register' render={() => <RegisterContainer/>}/>
             </div>
         );
     }
@@ -32,7 +30,7 @@ class App extends React.Component {
 
 const MapStateToProps = (state) => {
     return {
-        initialized:state.app.initialized,
+        initialized: state.app.initialized,
     }
 }
 

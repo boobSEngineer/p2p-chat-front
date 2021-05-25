@@ -2,21 +2,21 @@ import React from "react";
 import {Field, reduxForm} from "redux-form";
 import {required} from "../../../utils/utils";
 import {FieldWithError} from "../../common/FormsControl/FormsControl";
-
+import {Button, Form} from "react-bootstrap";
 
 
 const RegisterForm = (props) => {
     return <form onSubmit={props.handleSubmit}>
-        <div>
-            <Field name={'username'} component={'input'} component={FieldWithError("input")} placeholder={"Username"} validate={[required]}/>
-        </div>
-        <div>
-            <Field name={'password'} component={'input'} component={FieldWithError("input")} placeholder={"Password"} validate={[required]}/>
-        </div>
-        <div>
-            <button>Register</button>
-        </div>
-    </form>
+            <Form.Group controlId="formBasicEmail">
+                <Field name={'username'} component={FieldWithError} placeholder={"Username"}
+                       validate={[required]}/>
+            </Form.Group>
+            <Form.Group>
+                <Field name={'password'} component={FieldWithError} placeholder={"Password"}
+                       validate={[required]}/>
+            </Form.Group>
+                <Button variant='primary' type='submit'>Register</Button>
+        </form>
 }
 
 const RegisterReduxForm = reduxForm({form: 'register'})(RegisterForm);
