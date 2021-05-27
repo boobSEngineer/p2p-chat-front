@@ -18,17 +18,21 @@ class App extends React.Component {
 
     render() {
         return (
-            <Container>
+            <>
                 <HeaderContainer/>
-                <Row>
-                    <Col sm={4}> <ChatContainer/> </Col>
-                    <Col sm={8}>
-                        <Route path='/dialog' render={() => <DialogsContainer/>}/>
-                        <Route path='/register' render={() => <RegisterContainer/>}/>
-                        <Route path='/login' render={() => <LoginContainer/>}/>
-                    </Col>
-                </Row>
-            </Container>
+                <Container>
+                    <Row>
+                        <Col sm={4} style={{background:"#2e2e2e", paddingRight: 0, paddingLeft: 0}}>
+                            <ChatContainer/>
+                        </Col>
+                        <Col sm={8} className="bg-light" style={{paddingRight: 0, paddingLeft: 0}}>
+                            <Route path='/dialog' render={() => <DialogsContainer/>}/>
+                            <Route path='/register' render={() => <RegisterContainer/>}/>
+                            <Route path='/login' render={() => <LoginContainer/>}/>
+                        </Col>
+                    </Row>
+                </Container>
+            </>
         );
     }
 }

@@ -32,7 +32,7 @@ const RegisterForm = (props) => {
                     {props.error}
                 </p>
             </Alert>}
-            <Button variant='primary' type='submit'>Зарегистрироваться</Button>{' '}
+            <Button variant='dark' type='submit'>Зарегистрироваться</Button>{' '}
         </Container>
     </form>
 }

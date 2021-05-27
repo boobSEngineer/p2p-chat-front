@@ -34,7 +34,7 @@ const LoginForm = (props) => {
                     {props.error}
                 </p>
             </Alert>}
-        <Button variant='primary' type='submit'>Войти</Button>{' '}
+        <Button variant='dark' type='submit'>Войти</Button>{' '}
         </Container>
     </form>
 

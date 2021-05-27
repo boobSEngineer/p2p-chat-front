@@ -4,12 +4,15 @@ import {Button, Container, Navbar, Form, Nav} from 'react-bootstrap';
 import {Link} from "react-router-dom";
 
 const Header = (props) => {
-    return <Navbar expand="md" bg="primary" variant="light">
-        <Navbar.Brand>ТЕЛЕГРАЧИК</Navbar.Brand>
+    return <Navbar expand="md" style={{background:"#3c3f41"}} variant="dark">
+        <Navbar.Brand>ТЕЛЕГРАVVЧИК</Navbar.Brand>
         {props.isAuth ?
             <Navbar.Collapse className="justify-content-end">
-                <Navbar.Text>
-                    Signed in as: <a>{props.username}</a> <a>{props.uid}</a>
+                <Navbar.Text style={{paddingRight:"10px"}}>
+                    Signed in as: <a>{props.username}</a>
+                    <div>
+                        Your ID: <a>{props.uid}</a>
+                    </div>
                 </Navbar.Text>
                 <Button variant="outline-light" onClick={props.logOut}>Выйти</Button>
             </Navbar.Collapse>
