@@ -44,7 +44,7 @@ const Register = (props) => {
         props.registerThunkCreate(formData.username, formData.password);
     }
     return <div>
-        <h1>Зарегистрироваться</h1>
+        <h1 style={{paddingBottom: 15}}> Зарегистрироваться</h1>
         <RegisterReduxForm onSubmit={onSubmit}/>
     </div>
 }

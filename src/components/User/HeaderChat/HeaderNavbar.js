@@ -20,9 +20,9 @@ const HeaderNavbar = (props) => {
 
     return (
             <ButtonGroup aria-label="Basic example" size="sm">
-                <Button variant="outline-light" onClick={onClickDialog}>добавить диалог</Button>
-                <Button variant="outline-light" onClick={onClickGroup}> добавить группу </Button>
-                <Button variant="outline-light" onClick={onClickJoinGroup}>присоедениться к группе</Button>
+                <Button variant="outline-light" onClick={onClickDialog}>Добавить диалог</Button>
+                <Button variant="outline-light" onClick={onClickGroup}> Создать группу </Button>
+                <Button variant="outline-light" onClick={onClickJoinGroup}>Присоедениться к группе</Button>
             </ButtonGroup>
     )
 }

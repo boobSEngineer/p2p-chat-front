@@ -7,11 +7,10 @@ import {
     getCurrentChatId, getInvite, getMemberByChatId,
     getMessagesByCurrentId,
     getNameByChatId,
-    getNewMessageText
+    getNewMessageText, getTypeChat
 } from "../../redux/select/chat-selector";
 import {getMe, isAuth} from "../../redux/select/auth-selector";
 import {
-    getInviteThunkCreate,
     renameGroupThunkCreate,
     setInviteThunkCreate,
     setNewInviteThunkCreate
@@ -26,7 +25,8 @@ const mapStateToProps = (state) => {
         isAuth:isAuth(state),
         nameChat:getNameByChatId(state),
         invite:getInvite(state),
-        members:getMemberByChatId(state)
+        members:getMemberByChatId(state),
+        chatType:getTypeChat(state),
 
     }
 }

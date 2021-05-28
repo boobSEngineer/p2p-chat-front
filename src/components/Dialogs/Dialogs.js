@@ -33,17 +33,19 @@ const Dialogs = (props) => {
                             <span style={{fontSize: 18, color: "white"}}><b>{props.nameChat}</b></span><br/>
                             <Link style={{fontSize: 12, color: "white"}}> кол-во участников: {props.members} </Link>
                         </Navbar.Brand>
-                        <Navbar.Collapse className="justify-content-end">
-                            <HeaderChatGroups
-                                renameGroup={props.renameGroup}
-                                currentChatId={props.currentChatId}
-                                nameChat={props.nameChat}
-                                setInvite={props.setInvite}
-                                invite={props.invite}
-                                setNewInvite={props.setNewInvite}
-                                members={props.members}
-                            />
-                        </Navbar.Collapse>
+                        {props.chatType === "GROUP_CHAT" ? (
+                            <Navbar.Collapse className="justify-content-end">
+                                <HeaderChatGroups
+                                    renameGroup={props.renameGroup}
+                                    currentChatId={props.currentChatId}
+                                    nameChat={props.nameChat}
+                                    setInvite={props.setInvite}
+                                    invite={props.invite}
+                                    setNewInvite={props.setNewInvite}
+                                    members={props.members}
+                                />
+                            </Navbar.Collapse>) : null
+                        }
                     </Navbar>
                     <Container>
                         {messagesElements}

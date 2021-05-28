@@ -1,7 +1,8 @@
 import React from 'react';
 import s from './Chat.module.css';
 import HeaderNavbar from "./HeaderChat/HeaderNavbar";
-import {Button, Card, Col, ListGroup, Row} from "react-bootstrap";
+import {Button, Card, Col, Container, ListGroup, Row} from "react-bootstrap";
+import ChatContainer from "./ChatContainer";
 
 
 const Chat = (props) => {
@@ -16,23 +17,28 @@ const Chat = (props) => {
                                 joinToGroup={props.joinToGroup}
                             />
                         </div>
-                        {
-                            props.chats.map(c =>
-                                    <ListGroup>
-                                            <ListGroup.Item onClick={() => { props.setCurrentChatId(c.chatId)}} key={c.chatId} className={s.nav}>
-                                                <Row>
-                                                    <Col sm={3}>
-                                                        <Button variant="outline-primary" onClick={() => { props.leaveChat(c.chatId) }}>x</Button>
-                                                    </Col>
-                                                    <Col sm={8}>
-                                                        <div>{c.chatTitle}</div>
-                                                        <div>{c.chatId}</div>
-                                                    </Col>
-                                                </Row>
-                                            </ListGroup.Item>
-                                    </ListGroup>
-                            )
-                        }
+                        <ListGroup variant="flush">
+                            {
+                                props.chats.map(c =>
+                                    <ListGroup.Item  action style={{color:"white", background:"#2e2e2e" , borderColor: "white"}}
+                                        onClick={() => {props.setCurrentChatId(c.chatId)}} key={c.chatId}>
+                                        <Row>
+                                            <Col sm={9}>
+                                                <div>{c.chatTitle}</div>
+                                                <div>{c.chatId}</div>
+                                            </Col>
+                                            <Col sm={3}>
+                                                <Button variant="link" onClick={() => {
+                                                    props.leaveChat(c.chatId)
+                                                }}
+                                                        style={{color: "white", "text-decoration": "none"}}>
+                                                    Выйти</Button>
+                                            </Col>
+                                        </Row>
+                                    </ListGroup.Item>
+                                )
+                            }
+                        </ListGroup>
                     </div>)
                 : null
             }

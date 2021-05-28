@@ -12,6 +12,12 @@ export const getInvite = (state) => {
     return state.chatPage.invite;
 }
 
+export const getTypeChat = (state) => {
+    for (let chat of state.chatPage.chats) {
+        if (chat.chatId === state.chatPage.currentChatId) return chat.chatType
+    }
+}
+
 export const getNameByChatId = (state) => {
     for (let chat of state.chatPage.chats) {
         if (chat.chatId === state.chatPage.currentChatId) return chat.chatTitle

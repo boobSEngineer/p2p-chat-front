@@ -10,6 +10,9 @@ import {connect} from "react-redux";
 import {compose} from "redux";
 import ChatContainer from "./components/User/ChatContainer";
 import {Col, Container, Row} from "react-bootstrap";
+import LoginPage from "./Pages/LoginPage";
+import RegisterPage from "./Pages/RegisterPage";
+import DialogPage from "./Pages/DialogPage";
 
 class App extends React.Component {
     componentDidMount() {
@@ -20,18 +23,9 @@ class App extends React.Component {
         return (
             <>
                 <HeaderContainer/>
-                <Container>
-                    <Row>
-                        <Col sm={4} style={{background:"#2e2e2e", paddingRight: 0, paddingLeft: 0}}>
-                            <ChatContainer/>
-                        </Col>
-                        <Col sm={8} className="bg-light" style={{paddingRight: 0, paddingLeft: 0}}>
-                            <Route path='/dialog' render={() => <DialogsContainer/>}/>
-                            <Route path='/register' render={() => <RegisterContainer/>}/>
-                            <Route path='/login' render={() => <LoginContainer/>}/>
-                        </Col>
-                    </Row>
-                </Container>
+                <Route path='/dialog' render={() => <DialogPage/>}/>
+                <Route path='/register' render={() => <RegisterPage/>}/>
+                <Route path='/login' render={() => <LoginPage/>}/>
             </>
         );
     }
