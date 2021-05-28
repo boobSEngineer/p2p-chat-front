@@ -13,14 +13,14 @@ export const Textarea = ({input, meta, ...props}) => { //рест операто
 export const FieldWithError = ({input, meta, ...props}) => {
         const hasError = meta.touched && meta.error;
         return (
-            <div>
+            <>
                 <div className={s.formControl + " " + (hasError ? s.error : " ")}>
                     <Form.Control {...input} {...props}/>
                     <div>
                         {hasError && <span>{meta.error} </span>}
                     </div>
                 </div>
-            </div>
+            </>
         )
     }
 

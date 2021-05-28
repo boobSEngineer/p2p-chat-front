@@ -3,6 +3,7 @@ import s from './Chat.module.css';
 import HeaderNavbar from "./HeaderChat/HeaderNavbar";
 import {Button, Card, Col, Container, ListGroup, Row} from "react-bootstrap";
 import ChatContainer from "./ChatContainer";
+import HeaderNavbarWithHooks from "./HeaderChat/HeaderNavbar";
 
 
 const Chat = (props) => {

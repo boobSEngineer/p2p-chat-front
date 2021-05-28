@@ -1,29 +1,32 @@
-import React from 'react';
-import {Button, ButtonGroup, ListGroup, Navbar} from "react-bootstrap";
+import React, {useState} from 'react';
+import {Button, ButtonGroup, FormControl, InputGroup, ListGroup, Modal, Navbar} from "react-bootstrap";
+import ModalPrompt from "./ModalWithForm";
 
 const HeaderNavbar = (props) => {
 
-    const onClickDialog = () =>{
-        let yourId = prompt('Введите id');
-        props.addDialog(yourId);
-    }
-
-    const onClickGroup = () =>{
-        let chatName = prompt('Введите название группы');
-        props.addGroupChat(chatName);
-    }
-
-    const onClickJoinGroup = () =>{
-        let inviteUid = prompt('Введите id группы');
-        props.joinToGroup(inviteUid);
-    }
-
     return (
+        <>
             <ButtonGroup aria-label="Basic example" size="sm">
-                <Button variant="outline-light" onClick={onClickDialog}>Добавить диалог</Button>
-                <Button variant="outline-light" onClick={onClickGroup}> Создать группу </Button>
-                <Button variant="outline-light" onClick={onClickJoinGroup}>Присоедениться к группе</Button>
-            </ButtonGroup>
+                <ModalPrompt
+                    title={"Добавить собеседника"}
+                    message={"Введите ID собеседника для начала диалога."}
+                    placeholder={"ID"}
+                    onSubmit={(text) => {props.addDialog(text)}}
+                />
+                <ModalPrompt
+                    title={"Создать групповой чат"}
+                    message={"Введите название группового чата."}
+                    placeholder={"Название группы"}
+                    onSubmit={(text) => {props.addGroupChat(text)}}
+                />
+                <ModalPrompt
+                    title={"Присоедениться к групповому чату"}
+                    message={"Введите ID группового чата для того, чтобы присоедениться."}
+                    placeholder={"ID"}
+                    onSubmit={(text) => {props.joinToGroup(text)}}
+                />
+                </ButtonGroup>
+            </>
     )
 }
 
