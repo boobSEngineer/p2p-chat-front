@@ -3,19 +3,21 @@ import s from './Dialogs.module.css';
 import Message from './Message/Message';
 import {Field, reduxForm} from 'redux-form';
 import HeaderChatGroups from "./HeaderChat/HeaderChatGroups";
-import {Row, Container, Navbar} from "react-bootstrap";
+import {Form, Row, Container, Navbar, InputGroup, Col, Button} from "react-bootstrap";
 import {Link} from "react-router-dom";
+import {FormControlField} from "../common/FormsControl/FormsControl";
 
 
 const AddMessageForm = (props) => {
     return (
-        <form onSubmit={props.handleSubmit}>
-            <div>
-                <Field name={'newText'} component={'textarea'} placeholder={"Enter your message"}/>
-            </div>
-            <div>
-                <button>Send</button>
-            </div>
+        <form onSubmit={props.handleSubmit} autoComplete="off" >
+            <InputGroup>
+                <Field  name={'newText'} component={FormControlField} placeholder={"Enter your message"}/>
+                <Button type="submit"  variant="outline-secondary" id="button-addon2">
+                    Button
+                </Button>
+            </InputGroup>
+            <input type="submit" style={{display: "none"}}/>
         </form>
     )
 }
@@ -26,9 +28,9 @@ const Dialogs = (props) => {
     let messagesElements = props.messages.map(m => <Message message={m}/>);
     return (
         <div>
-            {props.isAuth ? (
+            {props.isAuth && props.currentChatId ? (
                 <>
-                    <Navbar style={{background:"#2d2d2d"}}>
+                    <Navbar style={{background: "#2d2d2d"}}>
                         <Navbar.Brand>
                             <span style={{fontSize: 18, color: "white"}}><b>{props.nameChat}</b></span><br/>
                             <Link style={{fontSize: 12, color: "white"}}> кол-во участников: {props.members} </Link>

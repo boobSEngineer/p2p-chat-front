@@ -24,3 +24,9 @@ export const FieldWithError = ({input, meta, ...props}) => {
         )
     }
 
+export const FormControlField = ({input, meta, ...props}) => {
+    return <>
+        <Form.Control {...input} {...props}>
+        </Form.Control>
+    </>
+}
