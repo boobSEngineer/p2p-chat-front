@@ -8,7 +8,7 @@ import HeaderNavbarWithHooks from "./HeaderChat/HeaderNavbar";
 
 const Chat = (props) => {
     return (
-        <div>
+        <>
             {props.isAuth ? (
                     <div>
                         <div>
@@ -43,7 +43,7 @@ const Chat = (props) => {
                     </div>)
                 : null
             }
-        </div>
+        </>
     )
 }
 

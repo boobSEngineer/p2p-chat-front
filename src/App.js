@@ -21,12 +21,12 @@ class App extends React.Component {
 
     render() {
         return (
-            <>
+            <div className="content-root">
                 <HeaderContainer/>
                 <Route path='/dialog' render={() => <DialogPage/>}/>
                 <Route path='/register' render={() => <RegisterPage/>}/>
                 <Route path='/login' render={() => <LoginPage/>}/>
-            </>
+            </div>
         );
     }
 }

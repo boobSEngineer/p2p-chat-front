@@ -5,8 +5,8 @@ import ChatNavbar from "./ChatNavbar";
 
 const DialogPage = (props) => {
     return <>
-        <Container fluid>
-            <Row>
+        <Container fluid className="fill-height">
+            <Row className="fill-height">
                 <Col sm={4}
                      style={{
                          background: "#2e2e2e",

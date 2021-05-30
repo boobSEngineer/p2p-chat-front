@@ -11,3 +11,37 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.content-root {
+  width: 100vw;
+  height: 100vh;
+  flex-direction: column;
+  display: flex;
+}
+
+.fill-height {
+  flex: 1;
+  height: 100%;
+}
+
+.scroll-wrapper {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  overflow: auto;
+}
+
+.container-for-vertical-scroll {
+  flex-direction: column;
+  display: flex;
+}
+
+.debug-highlight {
+  background: red;
+}
+
+::-webkit-scrollbar {
+  width: 0;
+}
