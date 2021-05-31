@@ -3,11 +3,12 @@ import s from './Message.module.css';
 
 
 const Message = (props) => {
+    debugger
     return (
         <div className={[
             s.message,
             s.text,
-            `${props.me ? s.mine : ''}`,
+            `${props.message.senderUid === props.me ? s.mine : ''}`,
         ].join(" ")}>
 
             <div className={s.bubble_container}>
