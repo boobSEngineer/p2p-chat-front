@@ -1,4 +1,5 @@
 import {chatPeer} from "./p2p/p2p-chat";
+import {change} from "redux-form";
 
 const ADD_MESSAGE = 'ADD-MESSAGE';
 
@@ -37,6 +38,7 @@ export const sendMessageThunkCreate = (newMessageText, chatId, uid) => {
     return (dispatch) => {
         dispatch(addMessageCreate(newMessageText, chatId, uid));
         chatPeer.sendMessage(chatId, newMessageText);
+        dispatch(change("AddMessageForm", "newText", ""));
     }
 }
 

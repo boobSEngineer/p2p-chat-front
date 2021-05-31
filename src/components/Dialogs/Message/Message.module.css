@@ -5,6 +5,7 @@
 
 .text {
     color:white;
+    word-wrap: break-word;
 }
 
 .message .bubble_container {
