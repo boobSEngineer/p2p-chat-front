@@ -25,7 +25,7 @@ const AddMessageForm = (props) => {
 const AddMessageFormRedux = reduxForm({form: 'AddMessageForm'})(AddMessageForm);
 
 const Dialogs = (props) => {
-    let messagesElements = props.messages.map(m => <Message message={m}/>);
+    let messagesElements = props.messages.map(m => <Message message={m} me={props.me}/>);
     return (
         <>
             {props.isAuth && props.currentChatId ? (
