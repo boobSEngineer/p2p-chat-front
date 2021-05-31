@@ -2,13 +2,14 @@ import React from "react";
 import InviteLink from "./InviteLink";
 import {Button, ButtonGroup, Dropdown, Navbar} from "react-bootstrap";
 import s from "./HeaderChatGroups.module.css"
+import ModalPrompt from "../../User/HeaderChat/ModalWithForm";
 
 const HeaderChatGroups = (props) => {
 
-    const onClickRename = () => {
-        let newChatName = prompt('Введите переназвание группу' + " " + props.nameChat);
-        props.renameGroup(props.currentChatId, newChatName);
-    }
+    // const onClickRename = () => {
+    //     let newChatName = prompt('Введите переназвание группу' + " " + props.nameChat);
+    //     props.renameGroup(props.currentChatId, newChatName, "Что-то пошло не так.");
+    // }
 
     const style_dropdown_menu = {
         background: "#2d2d2d"
@@ -29,21 +30,33 @@ const HeaderChatGroups = (props) => {
                 <Dropdown.Menu style={style_dropdown_menu}>
                     <Dropdown.Item
                         style={style_dropdown_item} onClick={() => {
-                            props.setInvite(props.currentChatId)
-                        }}>
-                            Получить приглашение
+                        props.setInvite(props.currentChatId, "Вы не являетесь создателем группы.")
+                    }}>
+                        Получить приглашение
                     </Dropdown.Item>
                     <Dropdown.Item
                         style={style_dropdown_item} onClick={() => {
-                            props.setNewInvite(props.currentChatId)
-                        }}>
-                            Получить новое приглашение
+                        props.setNewInvite(props.currentChatId, "Вы не являетесь создателем группы.")
+                    }}>
+                        Получить новое приглашение
                     </Dropdown.Item>
-                    <Dropdown.Divider />
-                    <Dropdown.Item
-                        style={style_dropdown_item} onClick={onClickRename}>
-                            Переназвать группу
-                    </Dropdown.Item>
+                    <Dropdown.Divider/>
+                    <ModalPrompt
+                        title={"Изменить название чата"}
+                        message={"Введите новое название чата, для того чтобы изменить его."}
+                        placeholder={"Введите название"}
+                        onSubmit={(newChatName) => {
+                            props.renameGroup(props.currentChatId, newChatName, "Что-то пошло не так.")
+                        }}
+                        renderButton={(onClick) => {
+                            return <>
+                                <Dropdown.Item style={style_dropdown_item} onClick={onClick}>
+                                    Изменить название чата
+                                </Dropdown.Item>
+                            </>
+
+                        }}
+                    />
                 </Dropdown.Menu>
             </Dropdown>
         </>

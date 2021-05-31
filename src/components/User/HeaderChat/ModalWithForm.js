@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Button, Col, Container, Form, FormControl, InputGroup, Modal, Row} from "react-bootstrap";
+import {Button, Col, InputGroup, Modal, Row} from "react-bootstrap";
 import {Field, reduxForm} from "redux-form";
 import {FieldWithError} from "../../common/FormsControl/FormsControl";
 import {required} from "../../../utils/utils";
@@ -12,7 +12,8 @@ const ModalForm = (props) => {
             </Col>
             <InputGroup className="mb-3">
                 <Col sm="12">
-                <Field name={"value"} component={FieldWithError} placeholder={props.placeholder} validate={[required]}/>
+                    <Field name={"value"} component={FieldWithError} placeholder={props.placeholder}
+                           validate={[required]}/>
                 </Col>
             </InputGroup>
         </Modal.Body>
@@ -41,13 +42,16 @@ const ModalPrompt = (props) => {
         setShow(true)
     };
 
-
     const onSubmit = (formData) => {
         props.onSubmit(formData.value);
     }
 
+
     return (<>
-            <Button variant="outline-light" onClick={activateModal}>{props.title}</Button>
+            {props.renderButton ?
+                props.renderButton(activateModal)
+                : <Button variant="outline-light" onClick={activateModal}>{props.title}</Button>
+            }
 
             <Modal
                 show={show}

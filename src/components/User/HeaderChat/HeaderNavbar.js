@@ -11,19 +11,19 @@ const HeaderNavbar = (props) => {
                     title={"Добавить собеседника"}
                     message={"Введите ID собеседника для начала диалога."}
                     placeholder={"ID"}
-                    onSubmit={(text) => {props.addDialog(text)}}
+                    onSubmit={(text) => {props.addDialog(text, "Что-то пошло не так.")}}
                 />
                 <ModalPrompt
                     title={"Создать групповой чат"}
                     message={"Введите название группового чата."}
                     placeholder={"Название группы"}
-                    onSubmit={(text) => {props.addGroupChat(text)}}
+                    onSubmit={(text) => {props.addGroupChat(text, "Что-то пошло не так.")}}
                 />
                 <ModalPrompt
                     title={"Присоедениться к групповому чату"}
                     message={"Введите ID группового чата для того, чтобы присоедениться."}
                     placeholder={"ID"}
-                    onSubmit={(text) => {props.joinToGroup(text)}}
+                    onSubmit={(text) => {props.joinToGroup(text, "Такая ссылка не существует.")}}
                 />
                 </ButtonGroup>
             </>
