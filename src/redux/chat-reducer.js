@@ -110,7 +110,6 @@ export const joinToGroupThunkCreate = (inviteUid) => {
 
 export const setInviteThunkCreate = (chatId) => {
     return(dispatch) => {
-        debugger
         chatAPI.getInvite(chatId)
             .then(invite => {
                 dispatch(setInviteGroupCreate(invite));
@@ -120,7 +119,6 @@ export const setInviteThunkCreate = (chatId) => {
 
 export const setNewInviteThunkCreate = (chatId) => {
     return(dispatch) => {
-        debugger
         chatAPI.getNewInvite(chatId)
             .then(invite => {
                 dispatch(setInviteGroupCreate(invite));

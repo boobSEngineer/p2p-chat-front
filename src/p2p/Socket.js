@@ -5,8 +5,16 @@ export class Socket extends EventEmitter {
     constructor(url) {
         super()
 
-        this._socket = new WebSocket(url);
+        this._url = url;
         this._pending = [];
+        this._open = false;
+        this.reopen();
+
+        this.onerror = e => console.error(e);
+    }
+
+    reopen() {
+        this._socket = new WebSocket(this._url);
         this._open = false;
 
         this._socket.onmessage = msg => {
@@ -31,10 +39,13 @@ export class Socket extends EventEmitter {
 
         this._socket.onclose = () => {
             Logger.debug("socket close")
-            this._open = false
+            this._open = false;
         };
 
-        this.onerror = e => console.error(e);
+        this._socket.onerror = e => {
+            this.onerror(e);
+            this._open = false;
+        }
     }
 
     send(type, payload) {

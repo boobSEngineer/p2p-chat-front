@@ -56,6 +56,11 @@ export class Peer extends EventEmitter {
         connection.on("close", () => {
             if (this._connections[uid] === connection) {
                 delete this._connections[uid];
+                if (connection.pendingMessageQueue.length > 0) {
+                    let newConn = this._initConnection(uid, true);
+                    newConn.pendingMessageQueue = [ ...connection.pendingMessageQueue ];
+                    newConn.connect();
+                }
             }
         });
 
