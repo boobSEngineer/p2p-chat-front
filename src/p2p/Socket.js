@@ -31,6 +31,7 @@ export class Socket extends EventEmitter {
         }
 
         this._socket.onopen = () => {
+            Logger.debug("socket opened")
             while (this._pending.length) {
                 this._socket.send(this._pending.shift());
             }
@@ -38,8 +39,11 @@ export class Socket extends EventEmitter {
         }
 
         this._socket.onclose = () => {
-            Logger.debug("socket close")
+            Logger.debug("socket close, trying to reopen")
             this._open = false;
+            setTimeout(() => {
+                this.reopen()
+            }, 2000)
         };
 
         this._socket.onerror = e => {
