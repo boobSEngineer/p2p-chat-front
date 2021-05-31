@@ -1,6 +1,7 @@
 import { PeerConnection } from "./PeerConnection";
 import {Socket} from "./Socket";
 import {EventEmitter} from "./Events";
+import {Logger} from "./Logger";
 
 
 export const PeerEvents = {
@@ -17,7 +18,10 @@ export class Peer extends EventEmitter {
 
         this.uid = uid;
         this.socket = new Socket(options.signallingServer)
-        this.socket.send(PeerEvents.PEER_INIT, { uid });
+        this.socket.onopen = () => {
+            Logger.debug("opening socket for", uid);
+            this.socket.send(PeerEvents.PEER_INIT, { uid });
+        }
 
         this._connections = {};
         this._pendingCandidates = {};
@@ -56,6 +60,11 @@ export class Peer extends EventEmitter {
         connection.on("close", () => {
             if (this._connections[uid] === connection) {
                 delete this._connections[uid];
+                if (connection.pendingMessageQueue.length > 0) {
+                    let newConn = this._initConnection(uid, true);
+                    newConn.pendingMessageQueue = [ ...connection.pendingMessageQueue ];
+                    newConn.connect();
+                }
             }
         });
 

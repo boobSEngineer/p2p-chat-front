@@ -135,7 +135,6 @@ export const joinToGroupThunkCreate = (inviteUid, catch_error) => {
 
 export const setInviteThunkCreate = (chatId, catch_error) => {
     return (dispatch) => {
-        debugger
         chatAPI.getInvite(chatId)
             .then(invite => {
                 if (invite) {
@@ -149,8 +148,7 @@ export const setInviteThunkCreate = (chatId, catch_error) => {
 }
 
 export const setNewInviteThunkCreate = (chatId, catch_error) => {
-    return (dispatch) => {
-        debugger
+    return(dispatch) => {
         chatAPI.getNewInvite(chatId)
             .then(invite => {
                 if (invite) {

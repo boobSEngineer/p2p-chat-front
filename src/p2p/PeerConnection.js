@@ -20,6 +20,7 @@ export class PeerConnection extends EventEmitter {
         this.pendingRemoteCandidates = [];
 
         this.pendingMessageQueue = [];
+        this.lastChannelActivity = Date.now();
 
         EventUtils.listen(
             this.peerConnection,
@@ -31,14 +32,33 @@ export class PeerConnection extends EventEmitter {
         )
     }
 
+    _queueOfferResend() {
+        setTimeout(() => {
+            if (!this.dataChannelOpened && this.dataChannel) {
+                this.dataChannel.onopen = null;
+                this.dataChannel.onclose = null;
+                this.dataChannel.onmessage = null;
+                Logger.debug("channel open timeout expired from " + this.peer.uid + " to " + this.targetUid);
+                this.emit("close");
+            }
+        }, 5000);
+    }
+
     connect() {
         if (this.isInitiator) {
             this._initDataChannel(
                 this.peerConnection.createDataChannel("CHANNEL_NAME")
             );
             this._setLocalDescriptionAndSend();
+            this._queueOfferResend();
         } else {
             Logger.error("connect must be called for initiator connection")
+        }
+    }
+
+    _sendQueuedMessages() {
+        while (this.pendingMessageQueue.length) {
+            this.dataChannel.send(this.pendingMessageQueue.shift());
         }
     }
 
@@ -49,9 +69,8 @@ export class PeerConnection extends EventEmitter {
                 this.dataChannelOpened = true;
                 this.emit("open");
                 Logger.debug("channel opened from " + this.peer.uid + " to " + this.targetUid);
-                while (this.pendingMessageQueue.length) {
-                    this.dataChannel.send(this.pendingMessageQueue.shift());
-                }
+                this.lastChannelActivity = Date.now();
+                this._sendQueuedMessages();
             },
             "close": () => {
                 this.dataChannelOpened = false;
@@ -125,7 +144,35 @@ export class PeerConnection extends EventEmitter {
         }
     }
 
+    _checkChannel() {
+        if (Date.now() - this.lastChannelActivity < 1000) {
+            return true;
+        } else {
+            if (this.dataChannel) {
+                this.dataChannel.send("ping");
+            }
+            return false;
+        }
+    }
+
+    _handlePingPong(data) {
+        if (data === "ping") {
+            this.dataChannel.send("pong");
+            this.lastChannelActivity = Date.now();
+            this._sendQueuedMessages();
+            return true;
+        } else if (data === "pong") {
+            this.lastChannelActivity = Date.now();
+            this._sendQueuedMessages();
+            return true;
+        }
+    }
+
     onDataChannelMessage(event) {
+        if (this._handlePingPong(event.data)) {
+            return;
+        }
+
         let data;
         try {
             data = JSON.parse(event.data);

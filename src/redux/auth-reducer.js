@@ -47,12 +47,10 @@ export const registerThunkCreate = (username, password) => {
     return (dispatch) => {
         return authAPI.registerUser(username, password)
             .then(data => {
-                debugger
                 if(data.success) {
                     dispatch(getAuthUserDataThunkCreate())
                     dispatch(requestChatsThunkCreate())
                 } else {
-                    debugger
                     let message = data.error
                     dispatch(stopSubmit("register", {_error: message}))
                 }
@@ -68,7 +66,6 @@ export const loginThunkCreate = (username, password) => {
                     dispatch(getAuthUserDataThunkCreate())
                     dispatch(requestChatsThunkCreate())
                 } else {
-                    debugger
                     let message = data.error
                     dispatch(stopSubmit("login", {_error: message}))
                 }
