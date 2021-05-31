@@ -9,7 +9,7 @@ import {
     getNameByChatId,
     getNewMessageText, getTypeChat
 } from "../../redux/select/chat-selector";
-import {getMe, isAuth} from "../../redux/select/auth-selector";
+import {getMe, isAuth, isInitialized} from "../../redux/select/auth-selector";
 import {
     renameGroupThunkCreate,
     setInviteThunkCreate,
@@ -20,7 +20,7 @@ import Login from "../Login/Login";
 
 
 const DialogContainer = (props) => {
-    if (!props.isAuth) return <Redirect to={"/login"}/>
+    if (!props.isAuth && props.isInitialized) return <Redirect to={"/login"}/>
     return <Dialogs {...props}/>
 
 }
@@ -32,6 +32,7 @@ const mapStateToProps = (state) => {
         currentChatId:getCurrentChatId(state),
         me:getMe(state),
         isAuth:isAuth(state),
+        isInitialized:isInitialized(state),
         nameChat:getNameByChatId(state),
         invite:getInvite(state),
         members:getMemberCountByChatId(state),
