@@ -35,7 +35,10 @@ const Dialogs = (props) => {
                             <Navbar style={{background: "#2d2d2d"}}>
                                 <Navbar.Brand>
                                     <span style={{fontSize: 18, color: "white"}}><b>{props.nameChat}</b></span><br/>
-                                    <Link style={{fontSize: 12, color: "white"}}> кол-во участников: {props.members} </Link>
+                                    <Link style={{fontSize: 12, color: "white"}}
+                                          onClick={()=>{props.viewMembers(props.currentChatId, "Что-то пошло не так.")}}>
+                                        кол-во участников: {props.members}
+                                    </Link>
                                 </Navbar.Brand>
                                 {props.chatType === "GROUP_CHAT" ? (
                                     <Navbar.Collapse className="justify-content-end">

@@ -2,9 +2,11 @@ import React from "react";
 import {Row, Col, Container} from "react-bootstrap";
 import DialogsContainer from "../components/Dialogs/DialogsContainer";
 import ChatNavbar from "./ChatNavbar";
+import {ModalMembersContainer} from "../components/Dialogs/HeaderChat/AlertMembers";
 
 const DialogPage = (props) => {
     return <>
+        <ModalMembersContainer/>
         <Container fluid className="fill-height">
             <Row className="fill-height">
                 <Col sm={4}
