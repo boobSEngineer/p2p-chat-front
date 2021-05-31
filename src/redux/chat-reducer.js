@@ -73,6 +73,7 @@ export const removeChatThunkCreate = (chatId) => {
     return (dispatch) => {
         chatAPI.leaveChat(chatId)
             .then(chat => {
+                dispatch(setCurrentChatIdCreate(null));
                 dispatch(requestChatsThunkCreate());
             })
     }
