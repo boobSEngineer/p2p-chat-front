@@ -3,6 +3,18 @@
     flex-direction: column;
 }
 
+.message .timestamp {
+    float: right;
+    margin-left: 10px;
+    margin-top: 5px;
+    padding: 0;
+    display: flex;
+    justify-content: flex-end;
+    color: #bbb;
+    font-size: 12px;
+    text-transform: uppercase;
+}
+
 .text {
     color:white;
     word-wrap: break-word;

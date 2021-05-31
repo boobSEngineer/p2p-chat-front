@@ -29,11 +29,11 @@ const LoginForm = (props) => {
                 </Col>
             </Form.Group>
             {props.error && <Alert variant="danger">
-                <Alert.Heading>ОШИБОЧКА</Alert.Heading>
+                <Alert.Heading>ОШИБКА</Alert.Heading>
                 <p>
                     {props.error}
                 </p>
-            </Alert>}
+                </Alert>}
             <Button variant='dark' type='submit'>Войти</Button>{' '}
         </Container>
     </form>
@@ -49,7 +49,7 @@ const Login = (props) => {
     return <>
         <Row>
             <Container>
-                <h1 style={{paddingBottom: 15}} >Войти</h1>
+                <h1 style={{paddingBottom: 15}}>Войти</h1>
                 <LoginReduxForm onSubmit={onSubmit}/>
             </Container>
         </Row>

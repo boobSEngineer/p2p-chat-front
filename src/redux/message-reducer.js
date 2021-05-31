@@ -4,12 +4,7 @@ import {change} from "redux-form";
 const ADD_MESSAGE = 'ADD-MESSAGE';
 
 let initialState = {
-    messages: [
-        {chatId: 'g38', senderUid: "akjfhjka-aaasnd-asbsa-asnsansa", text: 'OMG'},
-        {chatId: 'g38', senderUid: "a122112-121221-1212121", text: 'wow'},
-        {chatId: 'd35', senderUid: "ffff-fffff-ffff", text: 'hi'},
-        {chatId: 'd34', senderUid: "afafafa-afgfgg-nggbgbgbg", text: 'wow'},
-    ],
+    messages: [],
     newMessageText: '',
 }
 
@@ -22,7 +17,8 @@ const messageReducer = (state = initialState, action) => {
                     {
                         chatId: action.chatId,
                         text: action.newMessageText,
-                        senderUid: action.uid
+                        senderUid: action.uid,
+                        timestamp: Date.now(),
                     }],
             };
         default:

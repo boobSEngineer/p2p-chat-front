@@ -4,6 +4,10 @@ export const getMessages = (state) => {
     return state.messagePage.messages;
 }
 
+export const getError = (state) => {
+    return state.chatPage.error;
+}
+
 export const getChats = (state) => {
     return state.chatPage.chats;
 }

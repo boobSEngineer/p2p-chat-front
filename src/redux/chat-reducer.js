@@ -5,11 +5,13 @@ import {addMessageCreate} from "./message-reducer";
 const SET_CHATS = 'SET-CHATS';
 const SET_CURRENT_CHATID = 'SET-CURRENT_CHATID';
 const SET_INVITE = 'GET-INVITE';
+const SET_ERROR = 'SET-ERROR'
 
 let initialState = {
     chats: [],
     currentChatId: null,
     invite: null,
+    error: null,
 }
 
 const chatReducer = (state = initialState, action) => {
@@ -33,6 +35,12 @@ const chatReducer = (state = initialState, action) => {
                 invite: action.invite
             }
         }
+        case SET_ERROR: {
+            return {
+                ...state,
+                error: action.catch_error
+            }
+        }
         default: {
             return state;
         }
@@ -51,20 +59,32 @@ export const setInviteGroupCreate = (invite) => {
     return {type: SET_INVITE, invite}
 }
 
-export const addDialogThunkCreate = (youId) => {
+export const setErrorCreate = (catch_error) => {
+    return {type: SET_ERROR, catch_error}
+}
+
+export const addDialogThunkCreate = (youId, catch_error) => {
     return (dispatch) => {
         chatAPI.addNewDialog(youId)
             .then(chat => {
-                dispatch(requestChatsThunkCreate());
+                if (chat) {
+                    dispatch(requestChatsThunkCreate());
+                } else {
+                    dispatch(setErrorCreate(catch_error));
+                }
             })
     }
 }
 
-export const addGroupChatThunkCreate = (chatName) => {
+export const addGroupChatThunkCreate = (chatName, catch_error) => {
     return (dispatch) => {
         chatAPI.createGroupChat(chatName)
             .then(chat => {
-                dispatch(requestChatsThunkCreate());
+                if (chat) {
+                    dispatch(requestChatsThunkCreate());
+                } else {
+                    dispatch(setErrorCreate(catch_error));
+                }
             })
     }
 }
@@ -73,6 +93,7 @@ export const removeChatThunkCreate = (chatId) => {
     return (dispatch) => {
         chatAPI.leaveChat(chatId)
             .then(chat => {
+                dispatch(setCurrentChatIdCreate(null));
                 dispatch(requestChatsThunkCreate());
             })
     }
@@ -89,7 +110,7 @@ export const requestChatsThunkCreate = () => {
 }
 
 export const addMessageWithoutDialogThunkCreate = (senderUid, text) => {
-    return(dispatch) => {
+    return (dispatch) => {
         chatAPI.addNewDialog(senderUid)
             .then(chat => {
                 dispatch(addMessageCreate(text, chat.chatId, senderUid));
@@ -99,38 +120,58 @@ export const addMessageWithoutDialogThunkCreate = (senderUid, text) => {
 
 }
 
-export const joinToGroupThunkCreate = (inviteUid) => {
-    return(dispatch) => {
+export const joinToGroupThunkCreate = (inviteUid, catch_error) => {
+    return (dispatch) => {
         chatAPI.joinToGroup(inviteUid)
             .then(chat => {
-                dispatch(requestChatsThunkCreate());
+                if (chat) {
+                    dispatch(requestChatsThunkCreate());
+                } else {
+                    dispatch(setErrorCreate(catch_error));
+                }
             })
     }
 }
 
-export const setInviteThunkCreate = (chatId) => {
-    return(dispatch) => {
+export const setInviteThunkCreate = (chatId, catch_error) => {
+    return (dispatch) => {
         chatAPI.getInvite(chatId)
             .then(invite => {
-                dispatch(setInviteGroupCreate(invite));
+                if (invite) {
+                    dispatch(setInviteGroupCreate(invite));
+                } else {
+                    dispatch(setErrorCreate(catch_error));
+                }
+
             })
     }
 }
 
 export const setNewInviteThunkCreate = (chatId) => {
     return(dispatch) => {
+        debugger
         chatAPI.getNewInvite(chatId)
             .then(invite => {
-                dispatch(setInviteGroupCreate(invite));
+                if (invite) {
+                    dispatch(setInviteGroupCreate(invite));
+                } else {
+                    dispatch(setErrorCreate(catch_error));
+                }
+
             })
     }
 }
 
-export const renameGroupThunkCreate = (chatId, newChatName) => {
-    return(dispatch) => {
+export const renameGroupThunkCreate = (chatId, newChatName, catch_error) => {
+    return (dispatch) => {
         chatAPI.renameGroup(chatId, newChatName)
             .then(chat => {
-                dispatch(requestChatsThunkCreate());
+                if(chat){
+                    dispatch(requestChatsThunkCreate());
+                }
+                else {
+                    dispatch(setErrorCreate(catch_error));
+                }
             })
     }
 }
