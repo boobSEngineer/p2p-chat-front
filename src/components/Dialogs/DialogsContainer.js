@@ -15,6 +15,15 @@ import {
     setInviteThunkCreate,
     setNewInviteThunkCreate
 } from "../../redux/chat-reducer";
+import {Redirect} from "react-router-dom";
+import Login from "../Login/Login";
+
+
+const DialogContainer = (props) => {
+    if (!props.isAuth) return <Redirect to={"/login"}/>
+    return <Dialogs {...props}/>
+
+}
 
 const mapStateToProps = (state) => {
     return{
@@ -38,4 +47,4 @@ export default compose (
         setInvite:setInviteThunkCreate,
         setNewInvite:setNewInviteThunkCreate,
     }),
-)(Dialogs);
+)(DialogContainer);
