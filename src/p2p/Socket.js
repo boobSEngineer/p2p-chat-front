@@ -10,6 +10,8 @@ export class Socket extends EventEmitter {
         this._open = false;
         this.reopen();
 
+        this.onopen = () => {};
+        this.onclose = () => {};
         this.onerror = e => console.error(e);
     }
 
@@ -36,9 +38,11 @@ export class Socket extends EventEmitter {
                 this._socket.send(this._pending.shift());
             }
             this._open = true;
+            this.onopen();
         }
 
         this._socket.onclose = () => {
+            this.onclose();
             Logger.debug("socket close, trying to reopen")
             this._open = false;
             setTimeout(() => {
