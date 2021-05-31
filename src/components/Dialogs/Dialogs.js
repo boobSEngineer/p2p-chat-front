@@ -2,17 +2,17 @@ import React from 'react';
 import s from './Dialogs.module.css';
 import Message from './Message/Message';
 import {Field, reduxForm} from 'redux-form';
-import HeaderChatGroups from "./HeaderChat/HeaderChatGroups";
-import {Form, Row, Container, Navbar, InputGroup, Col, Button} from "react-bootstrap";
-import {Link} from "react-router-dom";
-import {FormControlField} from "../common/FormsControl/FormsControl";
+import HeaderChatGroups from './HeaderChat/HeaderChatGroups';
+import {Form, Row, Container, Navbar, InputGroup, Col, Button} from 'react-bootstrap';
+import {Link} from 'react-router-dom';
+import {FormControlField} from '../common/FormsControl/FormsControl';
 
 
 const AddMessageForm = (props) => {
     return (
         <form onSubmit={props.handleSubmit} autoComplete="off" >
             <InputGroup>
-                <Field  name={'newText'} component={FormControlField} placeholder={"Enter your message"}/>
+                <Field  name={"newText"} component={FormControlField} placeholder={"Enter your message"}/>
                 <Button type="submit"  variant="outline-secondary" id="button-addon2">
                     Button
                 </Button>
@@ -22,7 +22,7 @@ const AddMessageForm = (props) => {
     )
 }
 
-const AddMessageFormRedux = reduxForm({form: 'AddMessageForm'})(AddMessageForm);
+const AddMessageFormRedux = reduxForm({form: "AddMessageForm"})(AddMessageForm);
 
 const Dialogs = (props) => {
     let messagesElements = props.messages.map(m => <Message message={m} me={props.me}/>);
@@ -60,6 +60,11 @@ const Dialogs = (props) => {
                                 <Col sm={12} >
                                     <div className="scroll-wrapper">
                                         {messagesElements}
+                                        <div ref={element => {
+                                            if (element != null) {
+                                                element.scrollIntoView({behavior: "smooth"});
+                                            }
+                                        }}> </div>
                                     </div>
                                 </Col>
                             </Row>
@@ -67,7 +72,9 @@ const Dialogs = (props) => {
                                 <Col sm={12} >
                                     <div className={s.message_change_block}>
                                         <AddMessageFormRedux onSubmit={(values) => {
-                                            props.addMessage(values.newText, props.currentChatId, props.me);
+                                            if (values.newText) {
+                                                props.addMessage(values.newText, props.currentChatId, props.me);
+                                            }
                                         }}/>
                                     </div>
                                 </Col>
