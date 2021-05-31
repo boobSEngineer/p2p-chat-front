@@ -147,9 +147,8 @@ export const setInviteThunkCreate = (chatId, catch_error) => {
     }
 }
 
-export const setNewInviteThunkCreate = (chatId) => {
+export const setNewInviteThunkCreate = (chatId, catch_error) => {
     return(dispatch) => {
-        debugger
         chatAPI.getNewInvite(chatId)
             .then(invite => {
                 if (invite) {
