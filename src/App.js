@@ -9,6 +9,10 @@ import {initializeAppThunkCreate} from "./redux/app-reducer";
 import {connect} from "react-redux";
 import {compose} from "redux";
 import ChatContainer from "./components/User/ChatContainer";
+import {Col, Container, Row} from "react-bootstrap";
+import LoginPage from "./Pages/LoginPage";
+import RegisterPage from "./Pages/RegisterPage";
+import DialogPage from "./Pages/DialogPage";
 
 class App extends React.Component {
     componentDidMount() {
@@ -17,14 +21,11 @@ class App extends React.Component {
 
     render() {
         return (
-            <div className='wrapper'>
+            <div className="content-root">
                 <HeaderContainer/>
-                <ChatContainer/>
-                <div className='wrapper_content'>
-                    {/*<Route path='/dialog' render={() =>  <DialogsContainer/>}/>*/}
-                    <Route path='/login' render={() => <LoginContainer/>}/>
-                    <Route path='/register' render={() => <RegisterContainer/>}/>
-                </div>
+                <Route path='/dialog' render={() => <DialogPage/>}/>
+                <Route path='/register' render={() => <RegisterPage/>}/>
+                <Route path='/login' render={() => <LoginPage/>}/>
             </div>
         );
     }
@@ -32,7 +33,7 @@ class App extends React.Component {
 
 const MapStateToProps = (state) => {
     return {
-        initialized:state.app.initialized,
+        initialized: state.app.initialized,
     }
 }
 

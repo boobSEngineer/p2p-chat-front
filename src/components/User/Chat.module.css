@@ -5,6 +5,10 @@
 
 }
 
+.chat:hover {
+    background-color: #e32626;
+}
+
 .item a.active {
     color: aliceblue;
 }

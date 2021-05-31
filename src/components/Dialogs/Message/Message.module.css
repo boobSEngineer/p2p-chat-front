@@ -1,0 +1,62 @@
+.message {
+    display: flex;
+    flex-direction: column;
+}
+
+.text {
+    color:white;
+    word-wrap: break-word;
+}
+
+.message .bubble_container {
+    font-size: 14px;
+    display: flex;
+}
+
+
+.message.mine .bubble_container {
+    justify-content: flex-end;
+}
+
+
+.message.start .bubble_container .bubble {
+    /* margin-top: 10px; */
+    border-top-left-radius: 20px;
+}
+
+
+.message.end .bubble_container .bubble {
+    border-bottom-left-radius: 20px;
+    /* margin-bottom: 10px; */
+}
+
+.message.mine.start .bubble_container .bubble {
+    margin-top: 10px;
+    border-top-right-radius: 20px;
+}
+
+.message.mine.end .bubble_container .bubble {
+    border-bottom-right-radius: 20px;
+    margin-bottom: 10px;
+}
+
+.message .bubble_container .bubble {
+    margin: 1px 0px;
+    background: #6c757d;
+    padding: 10px 15px;
+    border-radius: 20px;
+    max-width: 75%;
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+.message.mine .bubble_container .bubble {
+    background: #007aff;
+    color: white;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+}

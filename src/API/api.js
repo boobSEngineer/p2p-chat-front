@@ -3,7 +3,7 @@ import * as axios from "axios";
 
 const instance = axios.create({
     withCredentials: true,
-    baseURL: 'http://192.168.86.32:8080/api/',
+    baseURL: 'https://192.168.86.32:8080/api/',
     crossOrigin: true,
     headers: {
         'Content-Type': 'application/json',
@@ -58,15 +58,8 @@ export const chatAPI = {
             })
     },
 
-    getChatId(uid){
-        return instance.get('chat/get_members', {uid})
-            .then(response => {
-                return response.data;
-            })
-    },
-
     getMembers(chatId){
-        return instance.get('chat/list', {chatId})
+        return instance.get(`chat/get_members?chatId=${chatId}`)
             .then(response => {
                 return response.data;
             })
@@ -93,15 +86,15 @@ export const chatAPI = {
             })
     },
 
-    getInvite(){
-        return instance.get('chat/get_invite_uid')
+    getInvite(chatId){
+        return instance.get(`chat/get_invite_uid?chatId=${chatId}`)
             .then(response => {
                 return response.data.inviteUid;
             })
     },
 
     getNewInvite(chatId){
-        return instance.post('chat/revoke_invite_uid', {chatId})
+        return instance.post(`chat/revoke_invite_uid?chatId=${chatId}`)
             .then(response => {
                 return response.data.inviteUid;
             })
@@ -122,7 +115,7 @@ export const chatAPI = {
     },
 
     leaveChat(chatId){
-        return instance.post('chat/rename_group', {chatId})
+        return instance.post('chat/leave', {chatId})
             .then(response => {
                 return response.data;
             })

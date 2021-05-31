@@ -1,10 +1,21 @@
 import React from 'react';
-import s from './../Dialogs.module.css';
+import s from './Message.module.css';
+
 
 const Message = (props) => {
+    debugger
     return (
-        <div className={s.messages}>
-            <div className={s.message}>{props.dialog}</div>
+        <div className={[
+            s.message,
+            s.text,
+            `${props.message.senderUid === props.me ? s.mine : ''}`,
+        ].join(" ")}>
+
+            <div className={s.bubble_container}>
+                <div className={[s.bubble].join(" ")} title={Message}>
+                    {props.message.text}
+                </div>
+            </div>
         </div>
     )
 }

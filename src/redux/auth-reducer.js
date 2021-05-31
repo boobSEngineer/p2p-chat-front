@@ -1,6 +1,7 @@
 import {authAPI} from "../API/api";
 import {stopSubmit} from "redux-form";
-import {requestChatsThunkCreate, setChatCreate} from "./chat-reducer";
+import {requestChatsThunkCreate, setChatsCreate, setCurrentChatIdCreate} from "./chat-reducer";
+import {chatPeer} from "./p2p/p2p-chat";
 
 const SET_AUTH_DATA_USER = 'SET-AUTH-DATA-USER'
 
@@ -36,6 +37,7 @@ export const getAuthUserDataThunkCreate = () => {
                 if(data !== null) {
                     let {uid, username} = data;
                     dispatch(setAuthUserDataCreate(uid, username, true));
+                    chatPeer.setPeerUid(uid);
                 }
             })
     }
@@ -45,10 +47,12 @@ export const registerThunkCreate = (username, password) => {
     return (dispatch) => {
         return authAPI.registerUser(username, password)
             .then(data => {
+                debugger
                 if(data.success) {
                     dispatch(getAuthUserDataThunkCreate())
                     dispatch(requestChatsThunkCreate())
                 } else {
+                    debugger
                     let message = data.error
                     dispatch(stopSubmit("register", {_error: message}))
                 }
@@ -64,6 +68,7 @@ export const loginThunkCreate = (username, password) => {
                     dispatch(getAuthUserDataThunkCreate())
                     dispatch(requestChatsThunkCreate())
                 } else {
+                    debugger
                     let message = data.error
                     dispatch(stopSubmit("login", {_error: message}))
                 }
@@ -77,7 +82,8 @@ export const logoutThunkCreate = () => {
             .then(data => {
                 if(data.success) {
                     dispatch(setAuthUserDataCreate(null, null, false));
-                    dispatch(setChatCreate([]));
+                    dispatch(setChatsCreate([]));
+                    dispatch(setCurrentChatIdCreate(null));
                 }
             })
     }

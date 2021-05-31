@@ -1,4 +1,5 @@
 import { EventEmitter } from "./Events";
+import {Logger} from "./Logger";
 
 export class Socket extends EventEmitter {
     constructor(url) {
@@ -28,7 +29,10 @@ export class Socket extends EventEmitter {
             this._open = true;
         }
 
-        this._socket.onclose = () => this._open = false;
+        this._socket.onclose = () => {
+            Logger.debug("socket close")
+            this._open = false
+        };
 
         this.onerror = e => console.error(e);
     }

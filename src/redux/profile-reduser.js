@@ -22,5 +22,4 @@ export const setUserProfileCreate = (profile) => {
     return {type: SET_USER_PROFILE, profile}
 }
 
-// тут getProfileThunkCreate
 export default profileReducer;

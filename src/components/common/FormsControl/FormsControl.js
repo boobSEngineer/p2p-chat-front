@@ -1,5 +1,6 @@
 import React from "react";
 import s from "./FormsControl.module.css"
+import {Form} from "react-bootstrap";
 
 export const Textarea = ({input, meta, ...props}) => { //рест оператор
     return (
@@ -9,19 +10,23 @@ export const Textarea = ({input, meta, ...props}) => { //рест операто
     )
 }
 
-export const FieldWithError = (Element) => {
-    return ({input, meta, ...props}) => {
+export const FieldWithError = ({input, meta, ...props}) => {
         const hasError = meta.touched && meta.error;
         return (
-            <div>
+            <>
                 <div className={s.formControl + " " + (hasError ? s.error : " ")}>
-                    <Element {...input} {...props}/>
+                    <Form.Control {...input} {...props}/>
                     <div>
                         {hasError && <span>{meta.error} </span>}
                     </div>
                 </div>
-            </div>
+            </>
         )
     }
-}
 
+export const FormControlField = ({input, meta, ...props}) => {
+    return <>
+        <Form.Control {...input} {...props}>
+        </Form.Control>
+    </>
+}
