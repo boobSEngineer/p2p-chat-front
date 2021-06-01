@@ -4,23 +4,23 @@ import Dialogs from "./Dialogs";
 import {connect} from "react-redux";
 import {compose} from "redux";
 import {
-    getCurrentChatId, getInvite, getMemberByChatId,
+    getCurrentChatId, getInvite, getMemberCountByChatId,
     getMessagesByCurrentId,
     getNameByChatId,
     getNewMessageText, getTypeChat
 } from "../../redux/select/chat-selector";
-import {getMe, isAuth} from "../../redux/select/auth-selector";
+import {getMe, isAuth, isInitialized} from "../../redux/select/auth-selector";
 import {
     renameGroupThunkCreate,
     setInviteThunkCreate,
-    setNewInviteThunkCreate
+    setNewInviteThunkCreate, viewMembersThunkCreate
 } from "../../redux/chat-reducer";
 import {Redirect} from "react-router-dom";
 import Login from "../Login/Login";
 
 
 const DialogContainer = (props) => {
-    if (!props.isAuth) return <Redirect to={"/login"}/>
+    if (!props.isAuth && props.isInitialized) return <Redirect to={"/login"}/>
     return <Dialogs {...props}/>
 
 }
@@ -32,9 +32,10 @@ const mapStateToProps = (state) => {
         currentChatId:getCurrentChatId(state),
         me:getMe(state),
         isAuth:isAuth(state),
+        isInitialized:isInitialized(state),
         nameChat:getNameByChatId(state),
         invite:getInvite(state),
-        members:getMemberByChatId(state),
+        members:getMemberCountByChatId(state),
         chatType:getTypeChat(state),
 
     }
@@ -46,5 +47,6 @@ export default compose (
         renameGroup:renameGroupThunkCreate,
         setInvite:setInviteThunkCreate,
         setNewInvite:setNewInviteThunkCreate,
+        viewMembers:viewMembersThunkCreate,
     }),
 )(DialogContainer);

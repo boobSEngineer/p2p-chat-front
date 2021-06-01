@@ -5,13 +5,15 @@ import {addMessageCreate} from "./message-reducer";
 const SET_CHATS = 'SET-CHATS';
 const SET_CURRENT_CHATID = 'SET-CURRENT_CHATID';
 const SET_INVITE = 'GET-INVITE';
-const SET_ERROR = 'SET-ERROR'
+const SET_ERROR = 'SET-ERROR';
+const SET_MEMBERS = 'SET-MEMBERS';
 
 let initialState = {
     chats: [],
     currentChatId: null,
     invite: null,
     error: null,
+    members: null,
 }
 
 const chatReducer = (state = initialState, action) => {
@@ -19,7 +21,7 @@ const chatReducer = (state = initialState, action) => {
         case SET_CHATS: {
             return {
                 ...state,
-                chats: [...action.chats]
+                chats: [...action.chats],
             }
         }
         case SET_CURRENT_CHATID: {
@@ -32,13 +34,19 @@ const chatReducer = (state = initialState, action) => {
         case SET_INVITE: {
             return {
                 ...state,
-                invite: action.invite
+                invite: action.invite,
             }
         }
         case SET_ERROR: {
             return {
                 ...state,
-                error: action.catch_error
+                error: action.catch_error,
+            }
+        }
+        case SET_MEMBERS: {
+            return {
+                ...state,
+                members: action.members,
             }
         }
         default: {
@@ -61,6 +69,10 @@ export const setInviteGroupCreate = (invite) => {
 
 export const setErrorCreate = (catch_error) => {
     return {type: SET_ERROR, catch_error}
+}
+
+export const setMembersCreate = (members) => {
+    return {type: SET_MEMBERS, members}
 }
 
 export const addDialogThunkCreate = (youId, catch_error) => {
@@ -167,6 +179,20 @@ export const renameGroupThunkCreate = (chatId, newChatName, catch_error) => {
             .then(chat => {
                 if(chat){
                     dispatch(requestChatsThunkCreate());
+                }
+                else {
+                    dispatch(setErrorCreate(catch_error));
+                }
+            })
+    }
+}
+
+export const viewMembersThunkCreate = (chatId, catch_error) => {
+    return (dispatch) => {
+        chatAPI.getMembers(chatId)
+            .then(members => {
+                if(members){
+                    dispatch(setMembersCreate(members));
                 }
                 else {
                     dispatch(setErrorCreate(catch_error));
