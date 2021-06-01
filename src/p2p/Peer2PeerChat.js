@@ -63,18 +63,18 @@ export class Peer2PeerChat extends EventEmitter {
             if (message.chat.chatType === "DIALOG") {
                 for (let chat of this.chats) {
                     if (chat.chatType === "DIALOG" && chat.targets && chat.targets[0] === uid) {
-                        this.emit("message", chat.chatId, uid, message.messageUid, message.payload, "DIALOG");
+                        this.emit("message", chat.chatId, uid, message.uid, message.payload, "DIALOG");
                         this._approveMessageDeliver(uid, message);
                         return;
                     }
                 }
-                this.emit("new_dialog", uid, message.messageUid, message.payload, "DIALOG");
+                this.emit("new_dialog", uid, message.uid, message.payload, "DIALOG");
             }
             // in case of group chat - find it by id
             else if (message.chat.chatType === "GROUP_CHAT") {
                 for (let chat of this.chats) {
                     if (chat.chatType === "GROUP_CHAT" && chat.chatId === message.chat.chatId) {
-                        this.emit("message", chat.chatId, uid, message.messageUid, message.payload, "GROUP_CHAT");
+                        this.emit("message", chat.chatId, uid, message.uid, message.payload, "GROUP_CHAT");
                         this._approveMessageDeliver(uid, message);
                     }
                 }

@@ -6,6 +6,7 @@ import authReducer from './auth-reducer';
 import chatReducer, {addMessageWithoutDialogThunkCreate, lastActivityThunkCreate} from './chat-reducer';
 import appReducer from './app-reducer';
 import {chatPeer} from './p2p/p2p-chat';
+import toastReducer, {addMessageToastCreate, addMessageToastThunkCreate} from "./toast-reducer";
 
 let reducers = combineReducers({
     form: formReducer,
@@ -13,6 +14,7 @@ let reducers = combineReducers({
     auth: authReducer,
     chatPage: chatReducer,
     app: appReducer,
+    toast: toastReducer,
 
 })
 
@@ -23,6 +25,7 @@ export default store;
 chatPeer.on('message', (chatId, senderUid, messageUid, text) => {
     store.dispatch(addMessageCreate(text, chatId, senderUid, messageUid))
     store.dispatch(lastActivityThunkCreate(chatId));
+    store.dispatch(addMessageToastThunkCreate(messageUid, "messageTitle", text))
 })
 
 chatPeer.on('message_delivered', (messageUid) => {
@@ -30,5 +33,6 @@ chatPeer.on('message_delivered', (messageUid) => {
 })
 
 chatPeer.on('new_dialog', (senderUid, messageUid, text) => {
-    store.dispatch(addMessageWithoutDialogThunkCreate(senderUid, messageUid, text))
+    store.dispatch(addMessageWithoutDialogThunkCreate(senderUid, messageUid, text));
+    store.dispatch(addMessageToastThunkCreate(messageUid, "messageTitle", text));
 })

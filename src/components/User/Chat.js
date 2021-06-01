@@ -1,9 +1,8 @@
 import React from 'react';
 import s from './Chat.module.css';
 import HeaderNavbar from "./HeaderChat/HeaderNavbar";
-import {Button, Card, Col, Container, ListGroup, Row} from "react-bootstrap";
-import ChatContainer from "./ChatContainer";
-import HeaderNavbarWithHooks from "./HeaderChat/HeaderNavbar";
+import {Button, Col, Container, ListGroup, Row} from "react-bootstrap";
+import MessageToast from "./Toast/MessageToast";
 
 
 const Chat = (props) => {
