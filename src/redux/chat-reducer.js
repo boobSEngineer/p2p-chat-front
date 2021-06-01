@@ -121,11 +121,11 @@ export const requestChatsThunkCreate = () => {
     }
 }
 
-export const addMessageWithoutDialogThunkCreate = (senderUid, text) => {
+export const addMessageWithoutDialogThunkCreate = (senderUid, messageUid, text) => {
     return (dispatch) => {
         chatAPI.addNewDialog(senderUid)
             .then(chat => {
-                dispatch(addMessageCreate(text, chat.chatId, senderUid));
+                dispatch(addMessageCreate(text, chat.chatId, senderUid, messageUid));
                 dispatch(requestChatsThunkCreate());
             })
     }

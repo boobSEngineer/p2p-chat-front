@@ -1,5 +1,6 @@
 import {Peer} from "./Peer";
 import {EventEmitter} from "./Events";
+import {uuid} from "uuidv4";
 
 export class Peer2PeerChat extends EventEmitter {
     constructor(options) {
@@ -7,6 +8,8 @@ export class Peer2PeerChat extends EventEmitter {
         this.options = options;
         this.peer = null;
         this.chats = [];
+
+        this._deliveredMessages = {};
     }
 
     setPeerUid(peerUid) {
@@ -20,6 +23,7 @@ export class Peer2PeerChat extends EventEmitter {
 
         this.peer = new Peer(peerUid, this.options);
         this.peer.on("message", this.onMessage.bind(this))
+        this.peer.on("message_delivered", this.onMessageDelivered.bind(this))
     }
 
     setChats(chats) {
@@ -29,14 +33,28 @@ export class Peer2PeerChat extends EventEmitter {
     sendMessage(chatId, payload) {
         for (let chat of this.chats) {
             if (chat.chatId === chatId) {
-                let message = { chat, payload };
+                let messageUid = uuid();
+                let message = { chat, payload, uid: messageUid };
                 for (let target of chat.targets) {
                     this.peer.sendTo(target, "message", message);
                 }
-                return true;
+                return messageUid;
             }
         }
-        return false;
+        return null;
+    }
+
+    _approveMessageDeliver(uid, message) {
+        if (message.uid) {
+            this.peer.sendTo(uid, "message_delivered", message.uid);
+        }
+    }
+
+    onMessageDelivered(uid, messageUid) {
+        if (!this._deliveredMessages[messageUid]) {
+            this._deliveredMessages[messageUid] = true;
+            this.emit("message_delivered", messageUid, uid);
+        }
     }
 
     onMessage(uid, message) {
@@ -45,17 +63,19 @@ export class Peer2PeerChat extends EventEmitter {
             if (message.chat.chatType === "DIALOG") {
                 for (let chat of this.chats) {
                     if (chat.chatType === "DIALOG" && chat.targets && chat.targets[0] === uid) {
-                        this.emit("message", chat.chatId, uid, message.payload, "DIALOG");
+                        this.emit("message", chat.chatId, uid, message.messageUid, message.payload, "DIALOG");
+                        this._approveMessageDeliver(uid, message);
                         return;
                     }
                 }
-                this.emit("new_dialog", uid, message.payload, "DIALOG");
+                this.emit("new_dialog", uid, message.messageUid, message.payload, "DIALOG");
             }
             // in case of group chat - find it by id
             else if (message.chat.chatType === "GROUP_CHAT") {
                 for (let chat of this.chats) {
                     if (chat.chatType === "GROUP_CHAT" && chat.chatId === message.chat.chatId) {
-                        this.emit("message", chat.chatId, uid, message.payload, "GROUP_CHAT");
+                        this.emit("message", chat.chatId, uid, message.messageUid, message.payload, "GROUP_CHAT");
+                        this._approveMessageDeliver(uid, message);
                     }
                 }
             }
