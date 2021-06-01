@@ -17,7 +17,9 @@ const messageReducer = (state = initialState, action) => {
                     {
                         chatId: action.chatId,
                         text: action.newMessageText,
-                        senderUid: action.uid,
+                        senderUid: action.senderUid,
+                        messageUid: action.messageUid,
+                        delivered: false,
                         timestamp: Date.now(),
                     }],
             };
@@ -26,14 +28,14 @@ const messageReducer = (state = initialState, action) => {
     }
 }
 
-export const addMessageCreate = (newMessageText, chatId, uid) => {
-    return {type: ADD_MESSAGE, newMessageText, chatId, uid}
+export const addMessageCreate = (newMessageText, chatId, senderUid, messageUid) => {
+    return {type: ADD_MESSAGE, newMessageText, chatId, senderUid, messageUid}
 }
 
 export const sendMessageThunkCreate = (newMessageText, chatId, uid) => {
     return (dispatch) => {
-        dispatch(addMessageCreate(newMessageText, chatId, uid));
-        chatPeer.sendMessage(chatId, newMessageText);
+        let messageUid = chatPeer.sendMessage(chatId, newMessageText);
+        dispatch(addMessageCreate(newMessageText, chatId, uid, messageUid));
         dispatch(change("AddMessageForm", "newText", ""));
     }
 }

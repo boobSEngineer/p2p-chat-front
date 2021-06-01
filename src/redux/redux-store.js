@@ -20,10 +20,14 @@ let store = createStore(reducers, applyMiddleware(thunkMiddleware));
 
 export default store;
 
-chatPeer.on('message', (chatId, senderUid, text) => {
-    store.dispatch(addMessageCreate(text, chatId, senderUid))
+chatPeer.on('message', (chatId, senderUid, messageUid, text) => {
+    store.dispatch(addMessageCreate(text, chatId, senderUid, messageUid))
 })
 
-chatPeer.on('new_dialog', (senderUid, text) => {
-    store.dispatch(addMessageWithoutDialogThunkCreate(senderUid, text))
+chatPeer.on('message_delivered', (messageUid) => {
+    console.log("message delivered", messageUid)
+})
+
+chatPeer.on('new_dialog', (senderUid, messageUid, text) => {
+    store.dispatch(addMessageWithoutDialogThunkCreate(senderUid, messageUid, text))
 })
