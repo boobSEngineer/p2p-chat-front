@@ -1,7 +1,7 @@
 import {applyMiddleware, combineReducers, createStore} from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import {reducer as formReducer} from 'redux-form';
-import messageReducer, {addMessageCreate, markMessageDeliveredCreate} from './message-reducer';
+import messageReducer, {addMessageCreate, addMessageThunkCreate, markMessageDeliveredCreate} from './message-reducer';
 import authReducer from './auth-reducer';
 import chatReducer, {addMessageWithoutDialogThunkCreate, lastActivityThunkCreate} from './chat-reducer';
 import appReducer from './app-reducer';
@@ -23,7 +23,7 @@ let store = createStore(reducers, applyMiddleware(thunkMiddleware));
 export default store;
 
 chatPeer.on('message', (chatId, senderUid, messageUid, text) => {
-    store.dispatch(addMessageCreate(text, chatId, senderUid, messageUid))
+    store.dispatch(addMessageThunkCreate(text, chatId, senderUid, messageUid))
     store.dispatch(lastActivityThunkCreate(chatId));
     store.dispatch(addMessageToastThunkCreate(messageUid, "messageTitle", text))
 })

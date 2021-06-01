@@ -100,3 +100,8 @@
     border-bottom: var(--borderWidth) solid var(--borderColor);
     border-right: var(--borderWidth) solid var(--borderColor);
 }
+
+.title_text {
+    font-weight: bold;
+    color: #76c2ef;
+}

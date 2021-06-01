@@ -43,7 +43,7 @@ export const authAPI = {
 
 export const userAPI = {
     getUser(uid){
-        return instance.get('user/get', {uid})
+        return instance.get(`user/get?uid=${uid}`)
             .then(response => {
                 return response.data.user;
             })

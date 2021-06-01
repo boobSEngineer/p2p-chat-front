@@ -13,6 +13,7 @@ const Message = (props) => {
         ].join(" ")}>
             <div className={s.bubble_container}>
                 <div className={[s.bubble].join(" ")} title={Message}>
+                    { !isMyMessage ? <span className={s.title_text}> {props.message.senderName} <br/> </span> : null}
                     {props.message.text}
                     {
                         <div className={s.timestamp}>
