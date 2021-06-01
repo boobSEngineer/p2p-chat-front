@@ -72,3 +72,31 @@
     border-top-right-radius: 2px;
     border-bottom-right-radius: 2px;
 }
+
+.circle_container {
+    margin-top: -3px;
+    margin-left: 5px;
+}
+
+.circle {
+    margin-left: 2px;
+    height: 4px;
+    width: 4px;
+    background-color: #a6bcc2;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.checkmark {
+    margin-left: 10px;
+    --borderWidth: 3px;
+    --height: 14px;
+    --width: 9px;
+    --borderColor: #76c2ef;
+    display: inline-block;
+    transform: rotate(45deg);
+    height: var(--height);
+    width: var(--width);
+    border-bottom: var(--borderWidth) solid var(--borderColor);
+    border-right: var(--borderWidth) solid var(--borderColor);
+}

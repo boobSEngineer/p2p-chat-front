@@ -2,6 +2,7 @@ import {chatPeer} from "./p2p/p2p-chat";
 import {change} from "redux-form";
 
 const ADD_MESSAGE = 'ADD-MESSAGE';
+const MARK_MESSAGE = 'MARK-MESSAGE'
 
 let initialState = {
     messages: [],
@@ -23,6 +24,18 @@ const messageReducer = (state = initialState, action) => {
                         timestamp: Date.now(),
                     }],
             };
+        case MARK_MESSAGE: {
+            return {
+                ...state,
+                messages: state.messages.map(c => {
+                    if (c.messageUid === action.messageUid) {
+                        return {...c, delivered: true}
+                    }
+                    return c
+                })
+
+            }
+        }
         default:
             return state;
     }
@@ -30,6 +43,10 @@ const messageReducer = (state = initialState, action) => {
 
 export const addMessageCreate = (newMessageText, chatId, senderUid, messageUid) => {
     return {type: ADD_MESSAGE, newMessageText, chatId, senderUid, messageUid}
+}
+
+export const markMessageDeliveredCreate = (messageUid) => {
+    return {type: MARK_MESSAGE, messageUid}
 }
 
 export const sendMessageThunkCreate = (newMessageText, chatId, uid) => {
