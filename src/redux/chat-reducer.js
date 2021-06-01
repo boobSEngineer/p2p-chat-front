@@ -129,7 +129,15 @@ export const addMessageWithoutDialogThunkCreate = (senderUid, messageUid, text) 
                 dispatch(requestChatsThunkCreate());
             })
     }
+}
 
+export const lastActivityThunkCreate = (chatId) => {
+    return (dispatch) => {
+        chatAPI.updateActivityChat(chatId)
+            .then(chat => {
+                dispatch(requestChatsThunkCreate());
+            })
+    }
 }
 
 export const joinToGroupThunkCreate = (inviteUid, catch_error) => {

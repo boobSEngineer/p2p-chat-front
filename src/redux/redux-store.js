@@ -3,7 +3,7 @@ import thunkMiddleware from 'redux-thunk';
 import {reducer as formReducer} from 'redux-form';
 import messageReducer, {addMessageCreate, markMessageDeliveredCreate} from './message-reducer';
 import authReducer from './auth-reducer';
-import chatReducer, {addMessageWithoutDialogThunkCreate} from './chat-reducer';
+import chatReducer, {addMessageWithoutDialogThunkCreate, lastActivityThunkCreate} from './chat-reducer';
 import appReducer from './app-reducer';
 import {chatPeer} from './p2p/p2p-chat';
 
@@ -22,6 +22,7 @@ export default store;
 
 chatPeer.on('message', (chatId, senderUid, messageUid, text) => {
     store.dispatch(addMessageCreate(text, chatId, senderUid, messageUid))
+    store.dispatch(lastActivityThunkCreate(chatId));
 })
 
 chatPeer.on('message_delivered', (messageUid) => {

@@ -1,5 +1,6 @@
 import {chatPeer} from "./p2p/p2p-chat";
 import {change} from "redux-form";
+import {lastActivityThunkCreate} from "./chat-reducer";
 
 const ADD_MESSAGE = 'ADD-MESSAGE';
 const MARK_MESSAGE = 'MARK-MESSAGE'
@@ -54,6 +55,7 @@ export const sendMessageThunkCreate = (newMessageText, chatId, uid) => {
         let messageUid = chatPeer.sendMessage(chatId, newMessageText);
         dispatch(addMessageCreate(newMessageText, chatId, uid, messageUid));
         dispatch(change("AddMessageForm", "newText", ""));
+        dispatch(lastActivityThunkCreate(chatId));
     }
 }
 
