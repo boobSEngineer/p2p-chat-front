@@ -25,7 +25,7 @@ export default store;
 chatPeer.on('message', (chatId, senderUid, messageUid, text) => {
     store.dispatch(addMessageThunkCreate(text, chatId, senderUid, messageUid))
     store.dispatch(lastActivityThunkCreate(chatId));
-    store.dispatch(addMessageToastThunkCreate(messageUid, "messageTitle", text))
+    store.dispatch(addMessageToastThunkCreate(messageUid, "messageTitle", text, chatId))
 })
 
 chatPeer.on('message_delivered', (messageUid) => {
@@ -34,5 +34,4 @@ chatPeer.on('message_delivered', (messageUid) => {
 
 chatPeer.on('new_dialog', (senderUid, messageUid, text) => {
     store.dispatch(addMessageWithoutDialogThunkCreate(senderUid, messageUid, text));
-    store.dispatch(addMessageToastThunkCreate(messageUid, "messageTitle", text));
 })

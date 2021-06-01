@@ -13,10 +13,11 @@ const MessageToast = (props) => {
             position="bottom-end"
             autohide
             delay={30000}
-            onClose={() => {props.removeToast(props.toast.uid)}}
+            onClose={() => {props.chat && props.removeToast(props.toast.uid)}}
+            onClick={() => {props.chat && props.setCurrentChatId(props.chat.chatId); props.removeToast(props.toast.uid)}}
         >
             <Toast.Header className={s.text}>
-                <strong className="">{props.toast.title}</strong>
+                <strong className="">{props.chat && props.chat.chatTitle}</strong>
                 <small className="m-auto"/>
                 <small className="text-muted">{toastDate.getHours() + ":" + toastDate.getMinutes()}</small>
             </Toast.Header>
