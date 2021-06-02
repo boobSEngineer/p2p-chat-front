@@ -22,8 +22,8 @@ const messageReducer = (state = initialState, action) => {
                         chatId: action.chatId,
                         text: action.newMessageText,
                         senderUid: action.senderUid,
-                        senderName: null,
                         messageUid: action.messageUid,
+                        senderName: null,
                         delivered: false,
                         timestamp: Date.now(),
                     }],
@@ -61,7 +61,7 @@ export const addMessageCreate = (newMessageText, chatId, senderUid, messageUid) 
     return {type: ADD_MESSAGE, newMessageText, chatId, senderUid, messageUid}
 }
 
-export const setNameMessageCreate = (messageUid, senderName) => {
+export const setMessageSenderNameCreate = (messageUid, senderName) => {
     return {type: SET_NAME_MESSAGE, messageUid, senderName}
 }
 
@@ -75,9 +75,9 @@ export const addMessageThunkCreate = (newMessageText, chatId, senderUid, message
         userAPI.getUser(senderUid)
             .then(user => {
                     if (user) {
-                        dispatch(setNameMessageCreate(messageUid, user.username))
+                        dispatch(setMessageSenderNameCreate(messageUid, user.username))
                     } else {
-                        dispatch(setNameMessageCreate(messageUid, senderUid))
+                        dispatch(setMessageSenderNameCreate(messageUid, senderUid))
                     }
                 }
             )
