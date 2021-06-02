@@ -1,6 +1,6 @@
 import './App.css';
 import React from "react";
-import {Route} from "react-router-dom";
+import {Redirect, Route} from "react-router-dom";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import {initializeAppThunkCreate} from "./redux/app-reducer";
 import {connect} from "react-redux";
@@ -24,6 +24,7 @@ class App extends React.Component {
                 <Route path='/dialog' render={() => <DialogPage/>}/>
                 <Route path='/register' render={() => <RegisterPage/>}/>
                 <Route path='/login' render={() => <LoginPage/>}/>
+                <Route path='/' render={() => <Redirect to={"/dialog"}/>}/>
             </div>
         );
     }
