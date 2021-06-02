@@ -32,13 +32,21 @@ export class PeerConnection extends EventEmitter {
         )
     }
 
+    _removeAllCallbacks() {
+        if (this.dataChannel) {
+            this.dataChannel.onopen = null;
+            this.dataChannel.onclose = null;
+            this.dataChannel.onmessage = null;
+        }
+        this.peer.onicecandidate = null;
+        this.peer.ondatachannel = null;
+    }
+
     _queueOfferResend() {
         setTimeout(() => {
             if (!this.dataChannelOpened && this.dataChannel) {
-                this.dataChannel.onopen = null;
-                this.dataChannel.onclose = null;
-                this.dataChannel.onmessage = null;
                 Logger.debug("channel open timeout expired from " + this.peer.uid + " to " + this.targetUid);
+                this._removeAllCallbacks();
                 this.emit("close");
             }
         }, 5000);
@@ -74,6 +82,7 @@ export class PeerConnection extends EventEmitter {
             },
             "close": () => {
                 this.dataChannelOpened = false;
+                this._removeAllCallbacks();
                 this.emit("close");
                 Logger.debug("channel closed from " + this.peer.uid + " to " + this.targetUid);
             },
@@ -109,7 +118,7 @@ export class PeerConnection extends EventEmitter {
         let remoteDescription = new RTCSessionDescription(sdp);
         this.peerConnection.setRemoteDescription(remoteDescription)
             .then(() => {
-                Logger.debug("received " + (!this.isInitiator ? "offer" : "answer") + " sdp from " + this.targetUid + " to " + this.peer.uid);
+                Logger.debug("received " + (!this.isInitiator ? "offer" : "answer") + " sdp from " + this.targetUid + " to " + this.peer.uid, "content: " + JSON.stringify(sdp));
                 this.remoteDescriptionReady = true;
                 while (this.pendingRemoteCandidates.length) {
                     this.addRemoteCandidate(this.pendingRemoteCandidates.pop());
@@ -130,6 +139,7 @@ export class PeerConnection extends EventEmitter {
 
     onLocalIceCandidate(event) {
         if (event.candidate) {
+            Logger.debug("new local ice candidate", JSON.stringify(event.candidate))
             this.peer.socket.send(PeerEvents.CANDIDATE, {
                 senderUid: this.peer.uid,
                 targetUid: this.targetUid,
