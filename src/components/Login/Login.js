@@ -24,7 +24,7 @@ const LoginForm = (props) => {
                     Password
                 </Form.Label>
                 <Col sm="5">
-                    <Field name={'password'} component={FieldWithError} placeholder={"Password"}
+                    <Field name={'password'} type={"password"} component={FieldWithError} placeholder={"Password"}
                            validate={[required]}/>
                 </Col>
             </Form.Group>
