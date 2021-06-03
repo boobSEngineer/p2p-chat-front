@@ -42,14 +42,14 @@ export class PeerConnection extends EventEmitter {
         this.peer.ondatachannel = null;
     }
 
-    setupCloseTimeout() {
+    setupCloseTimeout(timeout) {
         setTimeout(() => {
             if (!this.dataChannelOpened && this.dataChannel) {
                 Logger.debug("channel open timeout expired from " + this.peer.uid + " to " + this.targetUid);
                 this._removeAllCallbacks();
                 this.emit("close");
             }
-        }, 6000);
+        }, timeout);
     }
 
     connect() {
@@ -58,7 +58,7 @@ export class PeerConnection extends EventEmitter {
                 this.peerConnection.createDataChannel("CHANNEL_NAME")
             );
             this._setLocalDescriptionAndSend();
-            this.setupCloseTimeout();
+            this.setupCloseTimeout(6000);
         } else {
             Logger.error("connect must be called for initiator connection")
         }
