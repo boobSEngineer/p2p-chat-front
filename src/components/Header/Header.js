@@ -26,7 +26,7 @@ const Header = (props) => {
                     <Dropdown.Toggle variant="secondary" id="dropdown-basic">
                         Профиль
                     </Dropdown.Toggle>
-                    <Dropdown.Menu style={style_dropdown_menu}>
+                    <Dropdown.Menu style={{...style_dropdown_menu, marginTop:20}}>
                         <ModalPrompt
                             title={"Изменить имя пользователя"}
                             message={"Введите новое имя, для того чтобы изменить его."}

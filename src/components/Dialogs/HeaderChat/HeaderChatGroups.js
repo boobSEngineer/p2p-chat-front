@@ -12,7 +12,7 @@ const HeaderChatGroups = (props) => {
     // }
 
     const style_dropdown_menu = {
-        background: "#2d2d2d"
+        background: "#545b62"
     };
     const style_dropdown_item = {
         color: "white"
@@ -27,7 +27,7 @@ const HeaderChatGroups = (props) => {
                 <Dropdown.Toggle variant="secondary" id="dropdown-basic">
                     . . .
                 </Dropdown.Toggle>
-                <Dropdown.Menu style={style_dropdown_menu}>
+                <Dropdown.Menu style={{...style_dropdown_menu, marginTop:20}}>
                     <Dropdown.Item
                         style={style_dropdown_item} onClick={() => {
                         props.setInvite(props.currentChatId, "Вы не являетесь создателем группы.")

@@ -20,8 +20,8 @@ const HeaderNavbar = (props) => {
                     onSubmit={(text) => {props.addGroupChat(text, "Что-то пошло не так.")}}
                 />
                 <ModalPrompt
-                    title={"Присоедениться к групповому чату"}
-                    message={"Введите ID группового чата для того, чтобы присоедениться."}
+                    title={"Присоединиться к групповому чату"}
+                    message={"Введите ID группового чата для того, чтобы присоединиться."}
                     placeholder={"ID"}
                     onSubmit={(text) => {props.joinToGroup(text, "Такая ссылка не существует.")}}
                 />
