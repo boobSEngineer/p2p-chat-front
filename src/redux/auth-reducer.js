@@ -75,13 +75,13 @@ export const loginThunkCreate = (username, password) => {
 
 export const logoutThunkCreate = () => {
     return (dispatch) => {
+        chatPeer.setPeerUid(null);
         return authAPI.logOut()
             .then(data => {
                 if(data.success) {
                     dispatch(setAuthUserDataCreate(null, null, false));
                     dispatch(setChatsCreate([]));
                     dispatch(setCurrentChatIdCreate(null));
-                    chatPeer.setPeerUid(null);
                 }
             })
     }

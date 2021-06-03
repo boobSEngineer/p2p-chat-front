@@ -66,6 +66,7 @@ export class Socket extends EventEmitter {
     }
 
     close() {
+        console.log("manually closing socket")
         this._socket.onopen = null;
         this._socket.onmessage = null;
         this._socket.onerror = null;
