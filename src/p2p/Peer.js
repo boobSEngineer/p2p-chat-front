@@ -32,7 +32,7 @@ export class Peer extends EventEmitter {
                 connection = this._initConnection(data.senderUid, false);
             }
             connection.setRemoteDescription(data.sdp);
-            connection.setupCloseTimeout(4000);
+            connection.setupCloseTimeout(9000);
         })
 
         this.socket.on(PeerEvents.CANDIDATE, data => {
@@ -62,9 +62,19 @@ export class Peer extends EventEmitter {
             if (this._connections[uid] === connection) {
                 delete this._connections[uid];
                 if (connection.pendingMessageQueue.length > 0) {
-                    let newConn = this._initConnection(uid, true);
-                    newConn.pendingMessageQueue = [ ...connection.pendingMessageQueue ];
-                    newConn.connect();
+                    let pendingMessages = [ ...connection.pendingMessageQueue ];
+                    setTimeout(() => {
+                        let establishedConn = this._connections[uid];
+                        if (!establishedConn) {
+                            let newConn = this._initConnection(uid, true);
+                            newConn.pendingMessageQueue = pendingMessages;
+                            newConn.connect();
+                        } else {
+                            for (let message of pendingMessages) {
+                                establishedConn.sendStr(message);
+                            }
+                        }
+                    }, Math.random() * 10000)
                 }
             }
         });

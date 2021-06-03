@@ -58,7 +58,7 @@ export class PeerConnection extends EventEmitter {
                 this.peerConnection.createDataChannel("CHANNEL_NAME")
             );
             this._setLocalDescriptionAndSend();
-            this.setupCloseTimeout(6000);
+            this.setupCloseTimeout(10000);
         } else {
             Logger.error("connect must be called for initiator connection")
         }
@@ -194,13 +194,16 @@ export class PeerConnection extends EventEmitter {
         this.emit("message", data);
     }
 
-    send(data) {
-        let msg = JSON.stringify(data);
+    sendStr(s) {
         if (this.dataChannelOpened) {
-            this.dataChannel.send(msg);
+            this.dataChannel.send(s);
         } else {
-            this.pendingMessageQueue.push(msg);
+            this.pendingMessageQueue.push(s);
         }
+    }
+
+    send(data) {
+        this.sendStr(JSON.stringify(data));
     }
 
 }
