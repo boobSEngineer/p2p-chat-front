@@ -64,4 +64,14 @@ export class Socket extends EventEmitter {
             this._pending.push(msg);
         }
     }
+
+    close() {
+        this._socket.onopen = null;
+        this._socket.onmessage = null;
+        this._socket.onerror = null;
+        this._socket.onclose = null;
+        this._open = false;
+        this._socket.close()
+        this.onclose();
+    }
 }
