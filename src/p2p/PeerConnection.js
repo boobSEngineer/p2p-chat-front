@@ -206,4 +206,10 @@ export class PeerConnection extends EventEmitter {
         this.sendStr(JSON.stringify(data));
     }
 
+    close() {
+        this._removeAllCallbacks();
+        if (this.dataChannel) {
+            this.dataChannel.close();
+        }
+    }
 }

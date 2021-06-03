@@ -106,6 +106,10 @@ export class Peer extends EventEmitter {
     }
 
     close() {
+        for (let uid in this._connections) {
+            this._connections[uid].close();
+        }
+        this._connections = {};
         this.socket.send(PeerEvents.CLOSE_PEER, { uid: this.uid });
         this.socket.close()
         this.socket = null;
