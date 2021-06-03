@@ -20,10 +20,11 @@ export class Peer2PeerChat extends EventEmitter {
             this.peer.close();
             this.peer = null;
         }
-
-        this.peer = new Peer(peerUid, this.options);
-        this.peer.on("message", this.onMessage.bind(this))
-        this.peer.on("message_delivered", this.onMessageDelivered.bind(this))
+        if (peerUid !== null) {
+            this.peer = new Peer(peerUid, this.options);
+            this.peer.on("message", this.onMessage.bind(this))
+            this.peer.on("message_delivered", this.onMessageDelivered.bind(this))
+        }
     }
 
     setChats(chats) {

@@ -81,6 +81,7 @@ export const logoutThunkCreate = () => {
                     dispatch(setAuthUserDataCreate(null, null, false));
                     dispatch(setChatsCreate([]));
                     dispatch(setCurrentChatIdCreate(null));
+                    chatPeer.setPeerUid(null);
                 }
             })
     }
