@@ -7,6 +7,7 @@ import chatReducer, {addMessageWithoutDialogThunkCreate, lastActivityThunkCreate
 import appReducer from './app-reducer';
 import {chatPeer} from './p2p/p2p-chat';
 import toastReducer, {addMessageToastCreate, addMessageToastThunkCreate} from "./toast-reducer";
+import {getCurrentChatId} from "./select/chat-selector";
 
 let reducers = combineReducers({
     form: formReducer,
@@ -25,7 +26,8 @@ export default store;
 chatPeer.on('message', (chatId, senderUid, messageUid, text) => {
     store.dispatch(addMessageThunkCreate(text, chatId, senderUid, messageUid))
     store.dispatch(lastActivityThunkCreate(chatId));
-    store.dispatch(addMessageToastThunkCreate(messageUid, "messageTitle", text, chatId))
+    if(getCurrentChatId(store.getState()) !== chatId)
+        store.dispatch(addMessageToastThunkCreate(messageUid, "messageTitle", text, chatId))
 })
 
 chatPeer.on('message_delivered', (messageUid) => {
