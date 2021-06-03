@@ -1,6 +1,6 @@
-import {authAPI} from "../API/api";
+import {authAPI, profileAPI} from "../API/api";
 import {stopSubmit} from "redux-form";
-import {requestChatsThunkCreate, setChatsCreate, setCurrentChatIdCreate} from "./chat-reducer";
+import {requestChatsThunkCreate, setChatsCreate, setCurrentChatIdCreate, setErrorCreate} from "./chat-reducer";
 import {chatPeer} from "./p2p/p2p-chat";
 
 const SET_AUTH_DATA_USER = 'SET-AUTH-DATA-USER'
@@ -34,7 +34,7 @@ export const getAuthUserDataThunkCreate = () => {
     return (dispatch) => {
         return authAPI.getMe()
             .then(data => {
-                if(data !== null) {
+                if (data !== null) {
                     let {uid, username} = data;
                     dispatch(setAuthUserDataCreate(uid, username, true));
                     chatPeer.setPeerUid(uid);
@@ -47,7 +47,7 @@ export const registerThunkCreate = (username, password) => {
     return (dispatch) => {
         return authAPI.registerUser(username, password)
             .then(data => {
-                if(data.success) {
+                if (data.success) {
                     dispatch(getAuthUserDataThunkCreate())
                     dispatch(requestChatsThunkCreate())
                 } else {
@@ -62,7 +62,7 @@ export const loginThunkCreate = (username, password) => {
     return (dispatch) => {
         return authAPI.logIn(username, password)
             .then(data => {
-                if(data.success) {
+                if (data.success) {
                     dispatch(getAuthUserDataThunkCreate())
                     dispatch(requestChatsThunkCreate())
                 } else {
@@ -78,10 +78,26 @@ export const logoutThunkCreate = () => {
         chatPeer.setPeerUid(null);
         return authAPI.logOut()
             .then(data => {
-                if(data.success) {
+                if (data.success) {
                     dispatch(setAuthUserDataCreate(null, null, false));
                     dispatch(setChatsCreate([]));
                     dispatch(setCurrentChatIdCreate(null));
+                }
+            })
+    }
+}
+
+export const terminateProfileThunkCreate = (catch_error) => {
+    return (dispatch) => {
+        return profileAPI.terminateAccount()
+            .then(data => {
+                if (data.success) {
+                    dispatch(setAuthUserDataCreate(null, null, false));
+                    dispatch(setChatsCreate([]));
+                    dispatch(setCurrentChatIdCreate(null));
+                }
+                else {
+                    dispatch(setErrorCreate(catch_error));
                 }
             })
     }

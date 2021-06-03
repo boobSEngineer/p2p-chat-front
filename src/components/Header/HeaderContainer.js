@@ -1,7 +1,8 @@
 import React from 'react';
 import {connect} from "react-redux";
 import Header from "./Header";
-import {logoutThunkCreate} from "../../redux/auth-reducer";
+import {loginThunkCreate, logoutThunkCreate, terminateProfileThunkCreate} from "../../redux/auth-reducer";
+import {editProfilePasswordThunkCreate, editProfileUsernameThunkCreate} from "../../redux/profile-reduser";
 
 class HeaderContainer extends React.Component {
     // componentDidMount() {
@@ -25,4 +26,11 @@ const MapStateToProps = (state) => {
 
     }
 }
-export default connect(MapStateToProps, {logOut: logoutThunkCreate})(HeaderContainer);
+export default connect(MapStateToProps,
+    {
+        logOut: logoutThunkCreate,
+        editProfileUsername:editProfileUsernameThunkCreate,
+        editProfilePassword:editProfilePasswordThunkCreate,
+        terminateProfile:terminateProfileThunkCreate,
+    }
+)(HeaderContainer);

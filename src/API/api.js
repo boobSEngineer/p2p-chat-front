@@ -41,8 +41,25 @@ export const authAPI = {
     },
 }
 
+export const profileAPI = {
+    editAccount(params) {
+        return instance.post('auth/edit_account', params)
+            .then(response => {
+                return response.data;
+            })
+    },
+
+    terminateAccount() {
+        return instance.post('auth/terminate_account')
+            .then(response => {
+                return response.data;
+            })
+    }
+
+}
+
 export const userAPI = {
-    getUser(uid){
+    getUser(uid) {
         return instance.get(`user/get?uid=${uid}`)
             .then(response => {
                 return response.data.user;
@@ -51,70 +68,70 @@ export const userAPI = {
 };
 
 export const chatAPI = {
-    getChats(){
+    getChats() {
         return instance.get('chat/list')
-            .then(response =>{
+            .then(response => {
                 return response.data;
             })
     },
 
-    getMembers(chatId){
+    getMembers(chatId) {
         return instance.get(`chat/get_members?chatId=${chatId}`)
             .then(response => {
                 return response.data;
             })
     },
 
-    updateActivityChat(chatId){
+    updateActivityChat(chatId) {
         return instance.post('chat/update_last_activity', {chatId})
             .then(response => {
                 return response.data;
             })
     },
 
-    addNewDialog(target){
+    addNewDialog(target) {
         return instance.post('chat/add_dialog', {target})
             .then(response => {
                 return response.data;
             })
     },
 
-    createGroupChat(chatName){
+    createGroupChat(chatName) {
         return instance.post('chat/create_group', {chatName})
             .then(response => {
                 return response.data;
             })
     },
 
-    getInvite(chatId){
+    getInvite(chatId) {
         return instance.get(`chat/get_invite_uid?chatId=${chatId}`)
             .then(response => {
                 return response.data.inviteUid;
             })
     },
 
-    getNewInvite(chatId){
+    getNewInvite(chatId) {
         return instance.post(`chat/revoke_invite_uid?chatId=${chatId}`)
             .then(response => {
                 return response.data.inviteUid;
             })
     },
 
-    joinToGroup(inviteUid){
+    joinToGroup(inviteUid) {
         return instance.post('chat/join_group', {inviteUid})
             .then(response => {
                 return response.data;
             })
     },
 
-    renameGroup(chatId, newChatName){
+    renameGroup(chatId, newChatName) {
         return instance.post('chat/rename_group', {chatId, newChatName})
             .then(response => {
                 return response.data;
             })
     },
 
-    leaveChat(chatId){
+    leaveChat(chatId) {
         return instance.post('chat/leave', {chatId})
             .then(response => {
                 return response.data;

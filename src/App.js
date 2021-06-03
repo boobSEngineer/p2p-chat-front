@@ -9,7 +9,6 @@ import LoginPage from "./Pages/LoginPage";
 import RegisterPage from "./Pages/RegisterPage";
 import DialogPage from "./Pages/DialogPage";
 import {ErrorModalContainer} from "./components/common/Alert";
-import {ModalMembersContainer} from "./components/Dialogs/HeaderChat/AlertMembers";
 
 class App extends React.Component {
     componentDidMount() {
