@@ -42,14 +42,14 @@ export class PeerConnection extends EventEmitter {
         this.peer.ondatachannel = null;
     }
 
-    _queueOfferResend() {
+    setupCloseTimeout() {
         setTimeout(() => {
             if (!this.dataChannelOpened && this.dataChannel) {
                 Logger.debug("channel open timeout expired from " + this.peer.uid + " to " + this.targetUid);
                 this._removeAllCallbacks();
                 this.emit("close");
             }
-        }, 5000);
+        }, 6000);
     }
 
     connect() {
@@ -58,7 +58,7 @@ export class PeerConnection extends EventEmitter {
                 this.peerConnection.createDataChannel("CHANNEL_NAME")
             );
             this._setLocalDescriptionAndSend();
-            this._queueOfferResend();
+            this.setupCloseTimeout();
         } else {
             Logger.error("connect must be called for initiator connection")
         }
@@ -96,7 +96,7 @@ export class PeerConnection extends EventEmitter {
                 this.peerConnection.setLocalDescription(localDescription)
                     .then(() => {
                         Logger.debug("sending " + (this.isInitiator ? "offer" : "answer") + " sdp from " + this.peer.uid + " to " + this.targetUid);
-                        this.peer.socket.send(PeerEvents.SDP, {
+                        this.peer && this.peer.socket && this.peer.socket.send(PeerEvents.SDP, {
                             senderUid: this.peer.uid,
                             targetUid: this.targetUid,
                             sdp: localDescription
@@ -140,7 +140,7 @@ export class PeerConnection extends EventEmitter {
     onLocalIceCandidate(event) {
         if (event.candidate) {
             Logger.debug("new local ice candidate", JSON.stringify(event.candidate))
-            this.peer.socket.send(PeerEvents.CANDIDATE, {
+            this.peer && this.peer.socket && this.peer.socket.send(PeerEvents.CANDIDATE, {
                 senderUid: this.peer.uid,
                 targetUid: this.targetUid,
                 candidate: event.candidate

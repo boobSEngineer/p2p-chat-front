@@ -32,6 +32,7 @@ export class Peer extends EventEmitter {
                 connection = this._initConnection(data.senderUid, false);
             }
             connection.setRemoteDescription(data.sdp);
+            connection.setupCloseTimeout();
         })
 
         this.socket.on(PeerEvents.CANDIDATE, data => {
